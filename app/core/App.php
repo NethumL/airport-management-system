@@ -56,7 +56,7 @@ class App
     public function parseUrl($url)
     {
         if (!$url) {
-            header("Location: ./home/index");
+            header("Location: " . BASE_URL . "home/index");
             die();
         }
         $url = preg_replace("/\?.*$/", "", $url);
