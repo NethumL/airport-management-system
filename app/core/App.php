@@ -60,6 +60,7 @@ class App
             die();
         }
         $url = preg_replace("/\?.*$/", "", $url);
+        $url = preg_replace("/-/", "_", $url);
         return explode('/', filter_var(rtrim($url, '/'), FILTER_SANITIZE_URL));
     }
 }
