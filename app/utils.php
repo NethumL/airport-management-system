@@ -16,6 +16,12 @@ function showNavbar(array $data, bool $isLoggedIn = true)
     );
 }
 
+function redirectRelative(string $relativePath)
+{
+    header("Location: " . BASE_URL . $relativePath);
+    die;
+}
+
 function safeJsonEncode($obj): string
 {
     $encoded = json_encode($obj, JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS);
