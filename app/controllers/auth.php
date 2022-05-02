@@ -9,11 +9,11 @@ class auth extends Controller
         session_start();
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             if (isset($_SESSION["user"]) && isset($_SESSION["last_activity"])) {
-                header("Location: " . BASE_URL . "home/index");
+                redirectRelative("home/index");
             } else {
                 $this->showView("auth/login");
+                die;
             }
-            die;
         } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (isset($_POST["username"], $_POST["password"])) {
                 if (strlen($_POST["username"]) < 1 || strlen($_POST["password"]) < 1) {
@@ -23,14 +23,12 @@ class auth extends Controller
                 } else {
                     $_SESSION["user"] = UserManager::getUserDetails($_POST["username"]);
                     $_SESSION["last_activity"] = time();
-                    header("Location: " . BASE_URL . "home/index");
-                    die;
+                    redirectRelative("home/index");
                 }
             } else {
                 create_flash_message("login", "Login error occurred.", FLASH_ERROR);
             }
-            header("Location: " . BASE_URL . "auth/login");
-            die;
+            redirectRelative("auth/login");
         }
     }
 
@@ -38,6 +36,6 @@ class auth extends Controller
     {
         session_start();
         session_destroy();
-        header("Location: " . BASE_URL . "auth/login");
+        redirectRelative("auth/login");
     }
 }
