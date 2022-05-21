@@ -15,18 +15,18 @@ class auth extends Controller
                 die;
             }
         } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (isset($_POST["username"], $_POST["password"])) {
-                if (strlen($_POST["username"]) < 1 || strlen($_POST["password"]) < 1) {
-                    create_flash_message("login", "Both username and password required", FLASH_ERROR);
-                } else if (!UserManager::checkCredentials($_POST["username"], $_POST["password"])) {
-                    create_flash_message("login", "Invalid username or password", FLASH_ERROR);
+            if (isset($_POST["email"], $_POST["password"])) {
+                if (strlen($_POST["email"]) < 1 || strlen($_POST["password"]) < 1) {
+                    create_flash_message("auth/login", "Both email and password required", FLASH_ERROR);
+                } else if (!UserManager::checkCredentials($_POST["email"], $_POST["password"])) {
+                    create_flash_message("auth/login", "Invalid email or password", FLASH_ERROR);
                 } else {
-                    $_SESSION["user"] = UserManager::getUserDetails($_POST["username"]);
+                    $_SESSION["user"] = UserManager::getUserDetails($_POST["email"]);
                     $_SESSION["last_activity"] = time();
                     redirectRelative("home/index");
                 }
             } else {
-                create_flash_message("login", "Login error occurred.", FLASH_ERROR);
+                create_flash_message("auth/login", "Login error occurred.", FLASH_ERROR);
             }
             redirectRelative("auth/login");
         }
