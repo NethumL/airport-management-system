@@ -4,45 +4,45 @@ require_once __DIR__ . '/AbstractManager.php';
 
 class UserManager extends AbstractManager
 {
-    public static function registerUser($username, $name, $password, $type): bool
+    public static function registerUser($email, $name, $password, $type): bool
     {
         $password = password_hash($password, PASSWORD_DEFAULT);
         if (!$password) {
             return false;
         }
 
-        $stmt = self::$db->prepare("INSERT INTO user(username, name, password, user_type) VALUES(?, ?, ?, ?);");
-        return $stmt->execute([$username, $name, $password, $type]);
+        $stmt = self::$db->prepare("INSERT INTO user(email, name, password, userType) VALUES(?, ?, ?, ?);");
+        return $stmt->execute([$email, $name, $password, $type]);
     }
 
-    public static function updateUser($username, $name, $type): bool
+    public static function updateUser($email, $name, $type): bool
     {
-        $query = "UPDATE user SET name = ?, user_type = ?";
-        $params = [$name, $type, $username];
-        $query .= " WHERE username = ?;";
+        $query = "UPDATE user SET name = ?, userType = ?";
+        $params = [$name, $type, $email];
+        $query .= " WHERE email = ?;";
         $stmt = self::$db->prepare($query);
         return $stmt->execute($params);
     }
 
-    public static function updatePassword($username, $password): bool
+    public static function updatePassword($email, $password): bool
     {
-        $stmt = self::$db->prepare("UPDATE user SET password = ? WHERE username = ?;");
+        $stmt = self::$db->prepare("UPDATE user SET password = ? WHERE email = ?;");
         $password = password_hash($password, PASSWORD_DEFAULT);
-        return $stmt->execute([$password, $username]);
+        return $stmt->execute([$password, $email]);
     }
 
-    public static function removeUser($username): bool
+    public static function removeUser($email): bool
     {
-        $stmt = self::$db->prepare("DELETE FROM user WHERE username = ?");
-        return $stmt->execute([$username]);
+        $stmt = self::$db->prepare("DELETE FROM user WHERE email = ?");
+        return $stmt->execute([$email]);
     }
 
-    public static function getUserDetails($username): array|false
+    public static function getUserDetails($email): array|false
     {
-        $user = self::getUser($username);
+        $user = self::getUser($email);
         if ($user) {
             return [
-                'username' => $user['username'],
+                'email' => $user['email'],
                 'name' => $user['name'],
                 'userType' => $user['userType']
             ];
@@ -51,18 +51,18 @@ class UserManager extends AbstractManager
         }
     }
 
-    public static function checkCredentials($username, $password): bool
+    public static function checkCredentials($email, $password): bool
     {
-        $user = self::getUser($username);
+        $user = self::getUser($email);
         return $user && password_verify($password, $user['password']);
     }
 
-    public static function getUsersBy($username = '', $name = '', $type = ''): array|false
+    public static function getUsersBy($email = '', $name = '', $type = ''): array|false
     {
-        $query = "SELECT username, name, user_type FROM user WHERE username LIKE ? AND name LIKE ? ";
-        $params = ['%' . $username . '%', '%' . $name . '%'];
+        $query = "SELECT email, name, userType FROM user WHERE email LIKE ? AND name LIKE ? ";
+        $params = ['%' . $email . '%', '%' . $name . '%'];
         if (!empty($type)) {
-            $query .= "AND user_type = ? ";
+            $query .= "AND userType = ? ";
             $params[] = $type;
         }
         $query .= ";";
@@ -73,9 +73,9 @@ class UserManager extends AbstractManager
             $output = array();
             foreach ($result as $row) {
                 $output[] = [
-                    "username" => $row["username"],
+                    "email" => $row["email"],
                     "name" => $row["name"],
-                    "userType" => $row["user_type"]
+                    "userType" => $row["userType"]
                 ];
             }
             return $output;
@@ -84,17 +84,17 @@ class UserManager extends AbstractManager
         }
     }
 
-    private static function getUser($username): array|false
+    private static function getUser($email): array|false
     {
-        $stmt = self::$db->prepare("SELECT * FROM user WHERE username=?;");
-        $stmt->execute([$username]);
+        $stmt = self::$db->prepare("SELECT * FROM user WHERE email=?;");
+        $stmt->execute([$email]);
         $result = $stmt->fetch();
         if ($result) {
             return [
-                'username' => $result['username'],
+                'email' => $result['email'],
                 'name' => $result['name'],
                 'password' => $result['password'],
-                'userType' => $result["user_type"]
+                'userType' => $result["userType"]
             ];
         } else {
             return false;
