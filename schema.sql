@@ -7,6 +7,17 @@ CREATE TABLE `user`
     PRIMARY KEY (`email`)
 );
 
+CREATE TABLE `unverified_user`
+(
+    `email`      varchar(50)                              NOT NULL,
+    `name`       varchar(50)                              NOT NULL,
+    `password`   varchar(256)                             NOT NULL,
+    `userType`   ENUM ('CUSTOMER', 'EMPLOYEE', 'MANAGER') NOT NULL DEFAULT 'CUSTOMER',
+    `token`      varchar(40)                              NOT NULL UNIQUE,
+    `expiryTime` timestamp                                NOT NULL,
+    PRIMARY KEY (`email`)
+);
+
 CREATE TABLE `airport`
 (
     `id`   int AUTO_INCREMENT NOT NULL,
