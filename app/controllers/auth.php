@@ -86,4 +86,49 @@ class auth extends Controller
         session_destroy();
         redirectRelative("auth/login");
     }
+
+    public function send_verification()
+    {
+        session_start();
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            if (isset($_SESSION["user"]) && isset($_SESSION["last_activity"])) {
+                redirectRelative("home/index");
+            } else {
+                $data = $this->getViewData();
+                $this->showView("auth/send_verification", $data);
+            }
+        } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (empty($_POST["email"])) {
+                create_flash_message("auth/send-verification", "Please enter your email", FLASH_ERROR);
+                redirectRelative("auth/send-verification");
+            }
+
+            $email = $_POST["email"];
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                create_flash_message("auth/send-verification", "Email is invalid", FLASH_ERROR);
+                redirectRelative("auth/send-verification");
+            }
+
+            $isRegistered = UserManager::getUserDetails($email) !== false;
+
+            $isUnverified = UnverifiedUserManager::getUnverifiedUserDetails($email) !== false;
+
+            if ($isRegistered) {
+                $user = UnverifiedUserManager::getUnverifiedUserDetails($email);
+                EmailHandler::sendEmail($user["email"], $user["name"], "Email is already registered", "reregister_email", []);
+            } else if ($isUnverified) {
+                $token = UnverifiedUserManager::updateVerificationToken($email);
+                $user = UnverifiedUserManager::getUnverifiedUserDetails($email);
+                EmailHandler::sendEmail($user["email"], $user["name"], "Verify email", "email_verification", ['token' => $token]);
+            } else {
+                $name = substr($email, 0, strrpos($email, '@'));  // Extract name from email address
+                EmailHandler::sendEmail($email, $name, "Someone tried to verify this email", "verify_unregistered_email", []);
+            }
+
+            create_flash_message("auth/login", "Check your inbox for a verification email", FLASH_SUCCESS);
+            redirectRelative("auth/login");
+        } else {
+            redirectRelative("home/index");
+        }
+    }
 }
