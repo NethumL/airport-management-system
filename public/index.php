@@ -12,6 +12,7 @@ try {
     // Ignore missing .env
 }
 
+define("ABS_URL", $_ENV["WEBSITE"] . $_ENV["BASE_URL"]);
 define("BASE_URL", $_ENV["BASE_URL"]);
 define("PUBLIC_URL", $_ENV["BASE_URL"] . "public/");
 
