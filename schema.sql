@@ -83,7 +83,7 @@ CREATE TABLE `payment`
     `id`               int AUTO_INCREMENT NOT NULL,
     `creditCardNumber` varchar(15)        NOT NULL,
     `paidAmount`       decimal(15, 2)     NOT NULL,
-    `paidDateTime`     timestamp          NOT NULL,
+    `paidDateTime`     timestamp          NOT NULL DEFAULT (current_timestamp()),
     `email`            varchar(50)        NOT NULL,
     `bookingId`        int                NOT NULL,
     PRIMARY KEY (`id`)

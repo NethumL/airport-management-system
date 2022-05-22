@@ -4,10 +4,10 @@ require_once __DIR__ . '/AbstractManager.php';
 
 class PaymentManager extends AbstractManager
 {
-    public static function addPayment($creditCardNumber, $paidAmount, $paidDateTime, $email, $bookingId): bool
+    public static function addPayment($creditCardNumber, $paidAmount, $email, $bookingId): bool
     {
-        $stmt = self::$db->prepare("INSERT INTO payment(creditCardNumber, paidAmount, paidDateTime, email, bookingId) VALUES(?, ?, ?, ?, ?);");
-        return $stmt->execute([$creditCardNumber, $paidAmount, $paidDateTime, $email, $bookingId]);
+        $stmt = self::$db->prepare("INSERT INTO payment(creditCardNumber, paidAmount, email, bookingId) VALUES(?, ?, ?, ?);");
+        return $stmt->execute([$creditCardNumber, $paidAmount, $email, $bookingId]);
     }
 
     public static function getPayment($id): array|false
