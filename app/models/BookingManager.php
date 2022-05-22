@@ -83,47 +83,47 @@ class BookingManager extends AbstractManager
         }
     }
 
-    // public static function getBookingBy($email = '', $isPaid = '', $flightNumber = ''): array|false
-    // {
-    //     $query = "SELECT * FROM booking WHERE ";
-    //     $params = [];
-    //     if (!empty($email)) {
-    //         $query .= "email = ? AND ";
-    //         $params[] = $email;
-    //     }
-    //     if (!empty($isPaid)) {
-    //         $query .= "(isPaid = ?) AND ";
-    //         $params[] = $isPaid;
-    //     }
-    //     if (!empty($flightNumber)) {
-    //         $query .= "flightNumber = ? AND ";
-    //         $params[] = $flightNumber;
-    //     }
-    //     $query .= "1;";
-    //     $stmt = self::$db->prepare($query);
-    //     $stmt->execute($params);
-    //     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    //     if (gettype($result) === "array") {
-    //         $output = array();
-    //         foreach ($result as $row) {
-    //             $stmt = self::$db->prepare("SELECT seatId FROM booking_seat WHERE bookingId=?;");
-    //             $stmt->execute([$row['id']]);
-    //             $result_ = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    //             $seatArr = array();
-    //             foreach ($result_ as $r) {
-    //                 $seatArr[] = $r['seatId'];
-    //             }
-    //             $output[] = [
-    //                 "id" => $row["id"],
-    //                 "flightNumber" => $row["flightNumber"],
-    //                 "isPaid" => $row["isPaid"],
-    //                 "email" => $row["email"],
-    //                 "seats" => $seatArr,
-    //             ];
-    //         }
-    //         return $output;
-    //     } else {
-    //         return false;
-    //     }
-    // }
+    public static function getBookingBy($email = '', $isPaid = '', $flightNumber = ''): array|false
+    {
+        $query = "SELECT * FROM booking WHERE ";
+        $params = [];
+        if (!empty($email)) {
+            $query .= "email = ? AND ";
+            $params[] = $email;
+        }
+        if ($isPaid != '') {
+            $query .= "(isPaid = ?) AND ";
+            $params[] = $isPaid;
+        }
+        if (!empty($flightNumber)) {
+            $query .= "flightNumber = ? AND ";
+            $params[] = $flightNumber;
+        }
+        $query .= "1;";
+        $stmt = self::$db->prepare($query);
+        $stmt->execute($params);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (gettype($result) === "array") {
+            $output = array();
+            foreach ($result as $row) {
+                $stmt = self::$db->prepare("SELECT seatId FROM booking_seat WHERE bookingId=?;");
+                $stmt->execute([$row['id']]);
+                $result_ = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $seatArr = array();
+                foreach ($result_ as $r) {
+                    $seatArr[] = $r['seatId'];
+                }
+                $output[] = [
+                    "id" => $row["id"],
+                    "flightNumber" => $row["flightNumber"],
+                    "isPaid" => $row["isPaid"],
+                    "email" => $row["email"],
+                    "seats" => $seatArr,
+                ];
+            }
+            return $output;
+        } else {
+            return false;
+        }
+    }
 }
