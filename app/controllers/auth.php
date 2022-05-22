@@ -179,4 +179,37 @@ class auth extends Controller
             redirectRelative("auth/login");
         }
     }
+
+    public function reset_password(string $token)
+    {
+        $result = PasswordResetManager::verifyToken($token, false);
+        if (!$result) {
+            create_flash_message("auth/forgot-password", "Reset token is invalid", FLASH_ERROR);
+            redirectRelative("auth/forgot-password");
+        }
+
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $data = $this->getViewData();
+            $data["token"] = $token;
+            $this->showView("auth/reset_password", $data);
+        } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $password = $_POST["password"];
+            if (empty($password)) {
+                create_flash_message("auth/reset-password", "New password is required", FLASH_ERROR);
+                redirectRelative("auth/reset-password/$token");
+            }
+
+            $email = PasswordResetManager::getEmailForToken($token);
+            PasswordResetManager::invalidateToken($token);
+            $result = UserManager::updatePassword($email, $password);
+            if ($result) {
+                create_flash_message("auth/login", "Your password was successfully changed", FLASH_SUCCESS);
+            } else {
+                create_flash_message("auth/login", "Something went wrong", FLASH_ERROR);
+            }
+            redirectRelative("auth/login");
+        } else {
+            redirectRelative("home/index");
+        }
+    }
 }
