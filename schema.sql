@@ -18,6 +18,13 @@ CREATE TABLE `unverified_user`
     PRIMARY KEY (`email`)
 );
 
+CREATE TABLE `password_reset`
+(
+    `email`      varchar(50) NOT NULL,
+    `token`      varchar(40) NOT NULL UNIQUE,
+    `expiryTime` timestamp   NOT NULL
+);
+
 CREATE TABLE `airport`
 (
     `id`   int AUTO_INCREMENT NOT NULL,
