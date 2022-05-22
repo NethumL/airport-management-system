@@ -2,6 +2,7 @@
 
 require_once __DIR__ . "/../utils.php";
 require_once __DIR__ . "/../models/UserManager.php";
+require_once __DIR__ . "/../models/PasswordResetManager.php";
 require_once __DIR__ . "/../models/UnverifiedUserManager.php";
 require_once __DIR__ . "/../EmailHandler.php";
 
@@ -142,6 +143,40 @@ class auth extends Controller
         } else {
             create_flash_message("home/index", "Verification token is invalid", FLASH_ERROR);
             redirectRelative("home/index");
+        }
+    }
+
+    public function forgot_password()
+    {
+        session_start();
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $data = $this->getViewData();
+            $this->showView("auth/forgot_password", $data);
+        } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (empty($_POST["email"])) {
+                create_flash_message("auth/forgot-password", "Please enter your email", FLASH_ERROR);
+                redirectRelative("auth/forgot-password");
+            }
+
+            $email = $_POST["email"];
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                create_flash_message("auth/forgot-password", "Email is invalid", FLASH_ERROR);
+                redirectRelative("auth/forgot-password");
+            }
+
+            $isRegistered = UserManager::getUserDetails($email) !== false;
+
+            if ($isRegistered) {
+                $user = UserManager::getUserDetails($email);
+                $token = PasswordResetManager::addPasswordReset($email);
+                EmailHandler::sendEmail($email, $user["name"], "Password reset", "password_reset", ['token' => $token]);
+            } else {
+                $name = substr($email, 0, strrpos($email, '@'));  // Extract name from email address
+                EmailHandler::sendEmail($email, $name, "Someone tried to reset this password", "reset_unregistered_email", []);
+            }
+
+            create_flash_message("auth/login", "Check your inbox for a password reset link", FLASH_SUCCESS);
+            redirectRelative("auth/login");
         }
     }
 }
