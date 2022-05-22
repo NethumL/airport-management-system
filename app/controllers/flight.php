@@ -128,6 +128,58 @@ class flight extends Controller
         }
     }
 
+    public function new()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $this->checkAuth("flight/new", function () {
+                if (!in_array($_SESSION["user"]["userType"], ["EMPLOYEE", "MANAGER"], true)) {
+                    redirectRelative("home/index");
+                }
+                return $this->getViewData();
+            });
+        } else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
+            $this->checkAuth("flight/new", function () {
+            });
+            if (!in_array($_SESSION["user"]["userType"], ["EMPLOYEE", "MANAGER"], true)) {
+                redirectRelative("home/index");
+            }
+
+            $flightDetails = filterArrayByKeys($_POST, self::FIELDS);
+
+            $undefinedFields = getUnsetKeys($flightDetails, self::FIELDS);
+
+            if (!empty($undefinedFields)) {
+                create_flash_message("flight/new", "All fields are required.", FLASH_ERROR);
+                redirectRelative("flight/new");
+            }
+
+            if (!$this->validate_flight_details($flightDetails)) {
+                create_flash_message("flight/new", "Fix invalid fields.", FLASH_ERROR);
+                redirectRelative("flight/new");
+            }
+
+            $flightDetails["departureDateTime"] = mergeDateTime($flightDetails["departureDate"], $flightDetails["departureTime"]);
+            $flightDetails["arrivalDateTime"] = mergeDateTime($flightDetails["arrivalDate"], $flightDetails["arrivalTime"]);
+
+            $result = FlightManager::addFlight(
+                $flightDetails["airline"],
+                $flightDetails["begin"],
+                $flightDetails["end"],
+                $flightDetails["departureDateTime"],
+                $flightDetails["arrivalDateTime"],
+                $flightDetails["economyClassPrice"],
+                $flightDetails["businessClassPrice"],
+                $flightDetails["status"]
+            );
+            if ($result) {
+                create_flash_message("flight/new", "Flight added successfully.", FLASH_SUCCESS);
+            } else {
+                create_flash_message("flight/new", "Something went wrong.", FLASH_ERROR);
+            }
+            redirectRelative("flight/new");
+        }
+    }
+
     private function validate_flight_details($details): bool
     {
         if (strlen($details["airline"]) < 1)
