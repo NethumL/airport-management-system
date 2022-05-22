@@ -105,6 +105,29 @@ class flight extends Controller
         }
     }
 
+    public function search()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $filterFields = filterArrayByKeys($_GET, self::FIELDS);
+
+            $result = FlightManager::getFlightsBy(
+                $filterFields["begin"],
+                $filterFields["end"],
+                $filterFields["departureDate"],
+                $filterFields["arrivalDate"],
+                $filterFields["economyClassPrice"],
+                $filterFields["businessClassPrice"],
+                $filterFields["status"]
+            );
+            if ($result) {
+                echo json_encode($result);
+            } else {
+                http_response_code(500);
+                die;
+            }
+        }
+    }
+
     private function validate_flight_details($details): bool
     {
         if (strlen($details["airline"]) < 1)
