@@ -131,4 +131,17 @@ class auth extends Controller
             redirectRelative("home/index");
         }
     }
+
+    public function verify_email(string $token)
+    {
+        session_start();
+        $result = UnverifiedUserManager::verifyUser($token);
+        if ($result) {
+            create_flash_message("auth/login", "Your email has been verified. Please login.", FLASH_SUCCESS);
+            redirectRelative("auth/login");
+        } else {
+            create_flash_message("home/index", "Verification token is invalid", FLASH_ERROR);
+            redirectRelative("home/index");
+        }
+    }
 }
