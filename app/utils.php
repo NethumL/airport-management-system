@@ -42,6 +42,15 @@ function safeJsonEncode($obj): string
     return $encoded ?: 'null';
 }
 
+function mergeDateTime(string $date, string $time): string
+{
+    $datetime = new DateTime($date);
+    $timeObj = new DateTime($time);
+
+    $datetime->setTime($timeObj->format('H'), $timeObj->format('i'), $timeObj->format('s'));
+    return $datetime->format('Y-m-d H:i:s');
+}
+
 const FLASH = "FLASH";
 const FLASH_SUCCESS = "success";
 const FLASH_ERROR = "danger";
