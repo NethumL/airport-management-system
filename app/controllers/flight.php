@@ -180,6 +180,23 @@ class flight extends Controller
         }
     }
 
+    public function view(string $id)
+    {
+        session_start();
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $this->checkAuth("flight/view", function (string $id) {
+                $data = $this->getViewData();
+
+                $flight = FlightManager::getFlight($id);
+                if (!$flight) {
+                    redirectRelative("flight/index");
+                }
+                $data["flight"] = $flight;
+                return $data;
+            }, [$id]);
+        }
+    }
+
     private function validate_flight_details($details): bool
     {
         if (strlen($details["airline"]) < 1)
