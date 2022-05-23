@@ -58,7 +58,7 @@
                     Register
                 </div>
                 <div class="card-body mb-2 fw-bold">
-                    <form action="login" method="post">
+                    <form action="register" method="post">
 
                         <!-- error message -->
                         <?php display_flash_message("auth/register") ?>
