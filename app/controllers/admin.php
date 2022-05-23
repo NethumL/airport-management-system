@@ -62,6 +62,88 @@ class admin extends Controller {
         }
     }
 
+    public function edit(string $email = "") {
+        session_start();
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $this->checkAuth("admin/edit", function () {
+                if ($_SESSION["user"]["userType"] !== "MANAGER") {
+                    http_response_code(403);
+                    die;
+                }
+            });
+            $data = $this->getViewData();
+            if (empty($email)) {
+                $data["users"] = UserManager::getUsersBy();
+            } else {
+                $user = UserManager::getUserDetails($email);
+                if ($user)
+                    $data["user"] = $user;
+                else {
+                    http_response_code(404);
+                    die();
+                }
+            }
+            $this->showView("admin/edit", $data);
+        } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $this->checkAuth("admin/edit", function () {
+                if ($_SESSION["user"]["userType"] !== "MANAGER") {
+                    http_response_code(403);
+                    die;
+                }
+            });
+
+            $userDetails = filterArrayByKeys($_POST, ["email", "name", "userType"]);
+            $undefinedFields = getUnsetKeys($userDetails, ["email", "name", "userType"]);
+
+            if (!empty($undefinedFields)) {
+                create_flash_message("admin/edit", "All fields are required.", FLASH_ERROR);
+                redirectRelative("admin/edit");
+            }
+
+            if (!$this->validate_user_details($userDetails, true)) {
+                create_flash_message("admin/edit", "Fix invalid fields.", FLASH_ERROR);
+                redirectRelative("admin/edit");
+            }
+
+            $result = UserManager::updateUser(
+                $userDetails["email"],
+                $userDetails["name"],
+                $userDetails["userType"]
+            );
+
+            if ($result) {
+                $response = UserManager::getUserDetails($userDetails["email"]);
+                echo json_encode($response);
+            } else {
+                http_response_code(500);
+                die();
+            }
+        } else if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+            $this->checkAuth("admin/edit", function () {
+                if ($_SESSION["user"]["userType"] !== "MANAGER") {
+                    http_response_code(403);
+                    die;
+                }
+            });
+
+            if (empty($email)) {
+                http_response_code(400);
+                die;
+            }
+
+            $result = UserManager::getUserDetails($email);
+            if (!$result) {
+                http_response_code(404);
+            }
+
+            $result = UserManager::removeUser($email);
+            if (!$result) {
+                http_response_code(400);
+                die();
+            }
+        }
+    }
+
     public function validate_user_details($userDetails, $ignorePassword = false) : bool {
         if (strlen($userDetails["name"]) < 1)
             return false;
