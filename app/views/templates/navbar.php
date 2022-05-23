@@ -21,7 +21,7 @@
                 <?php if ($isLoggedIn) { ?>
                     <li class="nav-item dropdown">
                         <span class="dropdown-toggle nav-link" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?php echo htmlspecialchars('$user["name"]') ?>
+                            <?php echo htmlspecialchars($user["name"]) ?>
                         </span>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarProfileDropdown">
                             <li>

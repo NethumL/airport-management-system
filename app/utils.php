@@ -22,10 +22,33 @@ function redirectRelative(string $relativePath)
     die;
 }
 
+function getUnsetKeys(array $data, array $keys): array
+{
+    return array_filter($keys, function ($key) use ($data) {
+        return !isset($data[$key]);
+    });
+}
+
+function filterArrayByKeys(array $data, array $keys): array
+{
+    return array_filter($data, function ($key) use ($keys) {
+        return in_array($key, $keys);
+    }, ARRAY_FILTER_USE_KEY);
+}
+
 function safeJsonEncode($obj): string
 {
     $encoded = json_encode($obj, JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS);
     return $encoded ?: 'null';
+}
+
+function mergeDateTime(string $date, string $time): string
+{
+    $datetime = new DateTime($date);
+    $timeObj = new DateTime($time);
+
+    $datetime->setTime($timeObj->format('H'), $timeObj->format('i'), $timeObj->format('s'));
+    return $datetime->format('Y-m-d H:i:s');
 }
 
 const FLASH = "FLASH";
