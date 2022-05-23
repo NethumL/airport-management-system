@@ -61,7 +61,7 @@
                     <form action="login" method="post">
 
                         <!-- error message -->
-                        <?php display_flash_message("login") ?>
+                        <?php display_flash_message("auth/register") ?>
 
                         <!-- email -->
                         <div class="row">
