@@ -8,7 +8,7 @@ ob_start();
 try {
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/..");
     $dotenv->load();
-} catch (Dotenv\Exception\InvalidPathException $e) {
+} catch (Exception $e) {
     // Ignore missing .env
 }
 
