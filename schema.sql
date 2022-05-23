@@ -7,6 +7,24 @@ CREATE TABLE `user`
     PRIMARY KEY (`email`)
 );
 
+CREATE TABLE `unverified_user`
+(
+    `email`      varchar(50)                              NOT NULL,
+    `name`       varchar(50)                              NOT NULL,
+    `password`   varchar(256)                             NOT NULL,
+    `userType`   ENUM ('CUSTOMER', 'EMPLOYEE', 'MANAGER') NOT NULL DEFAULT 'CUSTOMER',
+    `token`      varchar(40)                              NOT NULL UNIQUE,
+    `expiryTime` timestamp                                NOT NULL,
+    PRIMARY KEY (`email`)
+);
+
+CREATE TABLE `password_reset`
+(
+    `email`      varchar(50) NOT NULL,
+    `token`      varchar(40) NOT NULL UNIQUE,
+    `expiryTime` timestamp   NOT NULL
+);
+
 CREATE TABLE `airport`
 (
     `id`   int AUTO_INCREMENT NOT NULL,
@@ -65,7 +83,7 @@ CREATE TABLE `payment`
     `id`               int AUTO_INCREMENT NOT NULL,
     `creditCardNumber` varchar(15)        NOT NULL,
     `paidAmount`       decimal(15, 2)     NOT NULL,
-    `paidDateTime`     timestamp          NOT NULL,
+    `paidDateTime`     timestamp          NOT NULL DEFAULT current_timestamp(),
     `email`            varchar(50)        NOT NULL,
     `bookingId`        int                NOT NULL,
     PRIMARY KEY (`id`)

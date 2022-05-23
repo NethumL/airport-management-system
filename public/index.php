@@ -8,10 +8,11 @@ ob_start();
 try {
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/..");
     $dotenv->load();
-} catch (Dotenv\Exception\InvalidPathException $e) {
+} catch (Exception $e) {
     // Ignore missing .env
 }
 
+define("ABS_URL", $_ENV["WEBSITE"] . $_ENV["BASE_URL"]);
 define("BASE_URL", $_ENV["BASE_URL"]);
 define("PUBLIC_URL", $_ENV["BASE_URL"] . "public/");
 
