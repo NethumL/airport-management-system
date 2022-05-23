@@ -19,6 +19,12 @@ class FlightManager extends AbstractManager
         return $stmt->execute($params);
     }
 
+    public static function deleteFlight($id): bool
+    {
+        $stmt = self::$db->prepare("DELETE FROM flight WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
+
     public static function updateStatus($id, $status): bool
     {
         $stmt = self::$db->prepare("UPDATE flight SET status = ? WHERE id = ?;");
