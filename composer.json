@@ -1,4 +1,7 @@
 {
+  "name": "g12/airport-management-system",
+  "type": "project",
+  "description": "Semester 4 CS3022 project",
   "require": {
     "vlucas/phpdotenv": "^5.3",
     "ext-pdo": "*",
@@ -7,6 +10,7 @@
   "require-dev": {
     "phpunit/phpunit": "^9.5"
   },
+  "license": "MIT",
   "scripts": {
       "test": "phpunit tests"
   }
