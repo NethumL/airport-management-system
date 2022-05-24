@@ -66,18 +66,19 @@ class admin extends Controller {
         session_start();
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $this->checkAuth("admin/edit", function () {
-                if ($_SESSION["user"]["userType"] !== "MANAGER") {
-                    http_response_code(403);
-                    die;
-                }
+                return false;
             });
+            if ($_SESSION["user"]["userType"] !== "MANAGER") {
+                http_response_code(403);
+                die();
+            }
             $data = $this->getViewData();
             if (empty($email)) {
-                $data["users"] = UserManager::getUsersBy();
+                $data["showUsers"] = UserManager::getUsersBy();
             } else {
                 $user = UserManager::getUserDetails($email);
                 if ($user)
-                    $data["user"] = $user;
+                    $data["showUser"] = $user;
                 else {
                     http_response_code(404);
                     die();
@@ -124,6 +125,7 @@ class admin extends Controller {
                     http_response_code(403);
                     die;
                 }
+                return $this->getViewData();
             });
 
             if (empty($email)) {
@@ -152,7 +154,7 @@ class admin extends Controller {
         if (!$ignorePassword)
             if (strlen($userDetails["password"] < 8))
                 return false;
-        if (!in_array($userDetails["userType"], [2, 3], true))
+        if (!ctype_digit($userDetails["userType"]) || !in_array($userDetails["userType"], [2, 3]))
             return false;
 
         return true;
