@@ -2,5 +2,6 @@
 /.vscode
 /.idea
 .env
+.phpunit.result.cache
 
 /public/uploads
