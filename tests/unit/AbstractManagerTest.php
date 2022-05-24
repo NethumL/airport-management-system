@@ -10,6 +10,10 @@ class AbstractManagerTest extends TestCase
     protected static array $dbConfig;
     protected PDO $db;
 
+    protected static array $testUsers = [
+        ["email" => "john", "name" => "John Doe", "password" => "password123", "userType" => "CUSTOMER"]
+    ];
+
     public static function setUpBeforeClass(): void
     {
         $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/..");
