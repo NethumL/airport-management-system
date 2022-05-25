@@ -68,15 +68,20 @@ class admin extends Controller {
             $this->checkAuth("admin/edit", function () {
                 return false;
             });
+
             if ($_SESSION["user"]["userType"] !== "MANAGER") {
                 http_response_code(403);
                 die();
             }
+
             $data = $this->getViewData();
+
             if (empty($email)) {
                 $data["showUsers"] = UserManager::getUsersBy();
+
             } else {
                 $user = UserManager::getUserDetails($email);
+
                 if ($user)
                     $data["showUser"] = $user;
                 else {
@@ -84,7 +89,9 @@ class admin extends Controller {
                     die();
                 }
             }
+
             $this->showView("admin/edit", $data);
+
         } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $this->checkAuth("admin/edit", function () {
                 if ($_SESSION["user"]["userType"] !== "MANAGER") {
@@ -93,21 +100,34 @@ class admin extends Controller {
                 }
             });
 
-            $userDetails = filterArrayByKeys($_POST, ["email", "name", "userType"]);
-            $undefinedFields = getUnsetKeys($userDetails, ["email", "name", "userType"]);
+            if (empty($email)) {
+                http_response_code(400);
+                die();
+            }
+
+            $result = UserManager::getUserDetails($email);
+            if (!$result) {
+                http_response_code(404);
+                die();
+            }
+
+            $userDetails = filterArrayByKeys($_POST, ["name", "userType"]);
+            $undefinedFields = getUnsetKeys($userDetails, ["name", "userType"]);
+
+            $userDetails["email"] = $email;
 
             if (!empty($undefinedFields)) {
-                create_flash_message("admin/edit", "All fields are required.", FLASH_ERROR);
-                redirectRelative("admin/edit");
+                http_response_code(400);
+                die();
             }
 
             if (!$this->validate_user_details($userDetails, true)) {
-                create_flash_message("admin/edit", "Fix invalid fields.", FLASH_ERROR);
-                redirectRelative("admin/edit");
+                http_response_code(400);
+                die();
             }
 
             $result = UserManager::updateUser(
-                $userDetails["email"],
+                $email,
                 $userDetails["name"],
                 $userDetails["userType"]
             );
@@ -119,23 +139,25 @@ class admin extends Controller {
                 http_response_code(500);
                 die();
             }
+
         } else if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
             $this->checkAuth("admin/edit", function () {
                 if ($_SESSION["user"]["userType"] !== "MANAGER") {
                     http_response_code(403);
-                    die;
+                    die();
                 }
                 return $this->getViewData();
             });
 
             if (empty($email)) {
                 http_response_code(400);
-                die;
+                die();
             }
 
             $result = UserManager::getUserDetails($email);
             if (!$result) {
                 http_response_code(404);
+                die();
             }
 
             $result = UserManager::removeUser($email);
@@ -154,7 +176,7 @@ class admin extends Controller {
         if (!$ignorePassword)
             if (strlen($userDetails["password"] < 8))
                 return false;
-        if (!ctype_digit($userDetails["userType"]) || !in_array($userDetails["userType"], [2, 3]))
+        if (!in_array($userDetails["userType"], ["EMPLOYEE", "MANAGER"], true))
             return false;
 
         return true;
