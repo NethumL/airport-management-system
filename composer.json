@@ -3,6 +3,7 @@
   "type": "project",
   "description": "Semester 4 CS3022 project",
   "require": {
+    "php": "^8.0.0",
     "vlucas/phpdotenv": "^5.3",
     "ext-pdo": "*",
     "phpmailer/phpmailer": "^6.6"
