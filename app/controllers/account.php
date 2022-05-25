@@ -28,8 +28,8 @@ class account extends Controller {
                 return false;
             });
 
-            $name = $_POST["name"];
-            if (isset($name)) {
+            if (isset($_POST["name"])) {
+                $name = $_POST["name"];
                 if (strlen($name) < 1) {
                     create_flash_message("account/edit", "Provide a valid name.", FLASH_ERROR);
                     redirectRelative("account/edit");
@@ -44,18 +44,18 @@ class account extends Controller {
                 );
 
                 if ($result) {
-                    $response = UserManager::getUserDetails($userDetails["email"]);
-                    $_SESSION["user"] = $response;
-                    echo json_encode($response);
+                    $user = UserManager::getUserDetails($userDetails["email"]);
+                    $_SESSION["user"] = $user;
+                    create_flash_message("account/edit", "Update successful.", FLASH_SUCCESS);
                 } else {
-                    http_response_code(500);
-                    die();
+                    create_flash_message("account/edit", "Update unsuccessful.", FLASH_ERROR);
                 }
 
             } else {
                 create_flash_message("account/edit", "Provide a name.", FLASH_ERROR);
-                redirectRelative("account/edit");
             }
+
+            redirectRelative("account/edit");
         }
     }
 
