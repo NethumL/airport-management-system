@@ -39,7 +39,7 @@ class SeatManager extends AbstractManager
         if ($result) {
             return [
                 'id' => $result['id'],
-                'xPosition' => $result['yPosition'],
+                'xPosition' => $result['xPosition'],
                 'yPosition' => $result['yPosition'],
                 'isBooked' => $result["isBooked"],
                 'flightNumber' => $result['flightNumber'],
@@ -68,7 +68,7 @@ class SeatManager extends AbstractManager
                 $output[] = [
                     "id" => $row["id"],
                     "xPosition" => $row["xPosition"],
-                    "yPosotion" => $row["yPosition"],
+                    "yPosition" => $row["yPosition"],
                     "isBooked" => $row["isBooked"],
                     "flightNumber" => $row["flightNumber"],
                     "class" => $row["class"],
