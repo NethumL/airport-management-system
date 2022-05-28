@@ -32,71 +32,108 @@ showNavbar($data);
         </div>
     </div>
 
-    <div class="card col-sm-5 mx-auto mt-5">
+    <div class="card col-sm-9 mx-auto mt-5">
         <div class="card-header text-white bg-primary">
-          <?php if (isset($data["user"]) && in_array($data["user"]["userType"], ["MANAGER", "EMPLOYEE"], true)) { ?>
-              New flights
-              <a class="btn btn-info text-white float-end" href="<?php echo htmlspecialchars(BASE_URL . 'flight/index') ?>">
-                  View all
-              </a>
-          <?php } else { ?>
-              Booked flights
-          <?php }  ?>
+            <?php if (isset($data["user"]) && in_array($data["user"]["userType"], ["MANAGER", "EMPLOYEE"], true)) { ?>
+                Upcoming flights
+                <a class="btn btn-info text-white float-end"
+                   href="<?php echo htmlspecialchars(BASE_URL . 'flight/index') ?>">
+                    View all
+                </a>
+            <?php } else { ?>
+                Booked flights
+            <?php } ?>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table w-auto">
+            <div class="table-responsive d-flex">
+                <table class="table mx-auto">
                     <thead>
-                      <tr>
-                        <th class="pe-5" scope="col">From </th>
-                        <th class="pe-5" scope="col">To </th>
-                        <th class="pe-5" scope="col">Departure </th>
+                    <tr>
+                        <th class="pe-5" scope="col">Airline</th>
+                        <th class="pe-5" scope="col">From</th>
+                        <th class="pe-5" scope="col">To</th>
+                        <th class="pe-5" scope="col">Departure</th>
                         <th class="pe-5" scope="col">Arrival</th>
-                        <th class="pe-5" scope="col">Price </th>
+                        <th class="pe-5" scope="col">Economy Class Price</th>
+                        <th class="pe-5" scope="col">Business Class Price</th>
                         <th class="pe-5" scope="col">View</th>
-                        
-                      </tr>
+                        <?php if (isset($data["user"]) && $data["user"]["userType"] == "CUSTOMER") { ?>
+                            <th class="pe-5" scope="col">Pay</th>
+                            <th class="pe-5" scope="col">Seats</th>
+                        <?php } else { ?>
+                            <?php if (isset($data["user"]) && in_array($data["user"]["userType"], ["MANAGER", "EMPLOYEE"], true)) { ?>
+                                <th class="pe-5" scope="col">Edit</th>
+                            <?php } ?>
+                        <?php } ?>
+                    </tr>
                     </thead>
                     <tbody>
-                      <tr > 
-                        <td>Colombo</td>
-                        <td>London</td>
-                        <td>2022/05/01 2 PM</td>
-                        <td>2022/05/05 5 PM</td>
-                        <td>100</td>
-                        <td><button type="button" class="btn"><i class="fa-solid fa-eye"></i></button></td>
-                      
-                      </tr>
-                      <tr>
-                        <td>Colombo</td>
-                        <td>London</td>
-                        <td>2022/05/01 2 PM</td>
-                        <td>2022/05/05 5 PM</td>
-                        <td>100</td>
-                        <td><button type="button" class="btn"><i class="fa-solid fa-eye"></i></button></td>
-                       
-                      </tr>
-                      <tr>
-                        <td>Colombo</td>
-                        <td>London</td>
-                        <td>2022/05/01 2 PM</td>
-                        <td>2022/05/05 5 PM</td>
-                        <td>100</td>
-                        <td><button type="button" class="btn"><i class="fa-solid fa-eye"></i></button></td>
-                        
-                      </tr>
-                      <tr>
-                        <td>Colombo</td>
-                        <td>London</td>
-                        <td>2022/05/01 2 PM</td>
-                        <td>2022/05/05 5 PM</td>
-                        <td>100</td>
-                        <td><button type="button" class="btn"><i class="fa-solid fa-eye"></i></button></td>
-                       
-                      </tr>
+                    <?php if (isset($data["user"]) && $data["user"]["userType"] == "CUSTOMER") { ?>
+                        <?php foreach ($data["bookings"] as $booking) { ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($booking["flight"]["airline"]) ?></td>
+                                <td><?php echo htmlspecialchars($booking["flight"]["beginName"]) ?></td>
+                                <td><?php echo htmlspecialchars($booking["flight"]["endName"]) ?></td>
+                                <td><?php echo htmlspecialchars($booking["flight"]["departureDateTime"]) ?></td>
+                                <td><?php echo htmlspecialchars($booking["flight"]["arrivalDateTime"]) ?></td>
+                                <td><?php echo htmlspecialchars($booking["flight"]["economyClassPrice"]) ?></td>
+                                <td><?php echo htmlspecialchars($booking["flight"]["businessClassPrice"]) ?></td>
+                                <td>
+                                    <a class="btn btn-info"
+                                       href="<?php echo htmlspecialchars(BASE_URL . 'flight/view/' . $booking['flight']['id']) ?>">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <?php if ($booking["isPaid"]) { ?>
+                                        Paid
+                                    <?php } else { ?>
+                                        <a class="btn btn-success"
+                                           href="<?php echo htmlspecialchars(BASE_URL . 'flight/pay/' . $booking['id']) ?>">
+                                            <i class="fa-solid fa-credit-card"></i>
+                                        </a>
+                                    <?php } ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    $seatNames = array_map(function ($seat) {
+                                        return $seat['xPosition'] . $seat['yPosition'];
+                                    }, $booking["seats"]);
+                                    echo htmlspecialchars(join(", ", $seatNames));
+                                    ?>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <?php foreach ($data["flights"] as $flight) { ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($flight["airline"]) ?></td>
+                                <td><?php echo htmlspecialchars($flight["beginName"]) ?></td>
+                                <td><?php echo htmlspecialchars($flight["endName"]) ?></td>
+                                <td><?php echo htmlspecialchars($flight["departureDateTime"]) ?></td>
+                                <td><?php echo htmlspecialchars($flight["arrivalDateTime"]) ?></td>
+                                <td><?php echo htmlspecialchars($flight["economyClassPrice"]) ?></td>
+                                <td><?php echo htmlspecialchars($flight["businessClassPrice"]) ?></td>
+                                <td>
+                                    <a class="btn btn-info"
+                                       href="<?php echo htmlspecialchars(BASE_URL . 'flight/view/' . $flight['id']) ?>">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </td>
+                                <?php if (isset($data["user"]) && in_array($data["user"]["userType"], ["MANAGER", "EMPLOYEE"], true)) { ?>
+                                    <td>
+                                        <a class="btn btn-warning"
+                                           href="<?php echo htmlspecialchars(BASE_URL . 'flight/edit/' . $flight['id']) ?>">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                    </td>
+                                <?php } ?>
+                            </tr>
+                        <?php } ?>
+                    <?php } ?>
                     </tbody>
-                  </table>
-                </div>   
+                </table>
+            </div>
         </div>
     </div>
 
