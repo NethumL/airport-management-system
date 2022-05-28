@@ -50,7 +50,12 @@ class FlightManager extends AbstractManager
 
     public static function getFlight($id): array|false
     {
-        $stmt = self::$db->prepare("SELECT * FROM flight WHERE id=?;");
+        $stmt = self::$db->prepare(
+            "SELECT flight.*, b.name AS beginName, e.name AS endName FROM flight
+            JOIN airport b ON flight.begin = b.id
+            JOIN airport e ON flight.end = e.id
+            WHERE flight.id=?;"
+        );
         $stmt->execute([$id]);
         $result = $stmt->fetch();
         if ($result) {
@@ -58,12 +63,14 @@ class FlightManager extends AbstractManager
                 'id' => $result['id'],
                 'airline' => $result['airline'],
                 'begin' => $result['begin'],
-                'end' => $result["end"],
+                'beginName' => $result['beginName'],
+                'end' => $result['end'],
+                'endName' => $result['endName'],
                 'departureDateTime' => $result['departureDateTime'],
-                'arrivaDateTime' => $result['arrivalDateTime'],
+                'arrivalDateTime' => $result['arrivalDateTime'],
                 'economyClassPrice' => $result['economyClassPrice'],
-                'businessClassPrice' => $result["businessClassPrice"],
-                'status' => $result["status"]
+                'businessClassPrice' => $result['businessClassPrice'],
+                'status' => $result['status']
             ];
         } else {
             return false;
@@ -72,7 +79,7 @@ class FlightManager extends AbstractManager
 
     public static function getFlightsBy($begin = '', $end = '', $departureDate = '', $arrivalDate = '', $economyClassPrice = '', $businessClassPrice = '', $status = ''): array|false
     {
-        $query = "SELECT * FROM flight WHERE ";
+        $query = "SELECT flight.*, b.name AS beginName, e.name as endName FROM flight JOIN airport b ON b.id = flight.begin JOIN airport e ON e.id = flight.end WHERE ";
         $params = [];
         if (!empty($begin)) {
             $query .= "begin = ? AND ";
@@ -116,8 +123,12 @@ class FlightManager extends AbstractManager
             $output = array();
             foreach ($result as $row) {
                 $output[] = [
-                    "airline" => $row["begin"],
+                    "id" => $row["id"],
+                    "airline" => $row["airline"],
+                    "begin" => $row["begin"],
+                    "beginName" => $row["beginName"],
                     "end" => $row["end"],
+                    "endName" => $row["endName"],
                     "departureDateTime" => $row["departureDateTime"],
                     "arrivalDateTime" => $row["arrivalDateTime"],
                     "economyClassPrice" => $row["economyClassPrice"],
