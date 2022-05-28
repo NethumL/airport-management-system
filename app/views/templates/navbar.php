@@ -49,7 +49,7 @@ if (empty($user)) {
                 <?php } ?>
             </ul>
             <ul class="navbar-nav">
-                <?php if ($isLoggedIn) { ?>
+                <?php if (isset($user)) { ?>
                     <li class="nav-item dropdown">
                         <span class="dropdown-toggle nav-link text-white" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <?php echo htmlspecialchars($user["name"]) ?>
