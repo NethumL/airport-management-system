@@ -4,7 +4,7 @@ require_once __DIR__ . '/AbstractManager.php';
 
 class BookingManager extends AbstractManager
 {
-    public static function bookFlight($flightNumber, $isPaid, $email, $seats): bool
+    public static function bookFlight($flightNumber, $isPaid, $email, $seats): int
     {
         $stmt = self::$db->prepare("INSERT INTO booking(flightNumber, isPaid, email) VALUES(?, ?, ?);");
         $success = $stmt->execute([$flightNumber, $isPaid, $email]);
@@ -12,7 +12,8 @@ class BookingManager extends AbstractManager
             $stmt = self::$db->prepare("SELECT @@IDENTITY");
             $stmt->execute();
             $bookingId = $stmt->fetch();
-            return self::bookSeats($seats, $bookingId[0]);
+            self::bookSeats($seats, $bookingId[0]);
+            return $bookingId;
         } else {
             return $success;
         }
