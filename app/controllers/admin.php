@@ -168,6 +168,34 @@ class admin extends Controller {
         }
     }
 
+    public function search()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $this->checkAuth("admin/search", function () {
+                return false;
+            });
+
+            if ($_SESSION["user"]["userType"] !== "MANAGER") {
+                http_response_code(403);
+                die();
+            }
+
+            $filterFields = filterArrayByKeys($_GET, self::FIELDS);
+
+            $result = UserManager::getUsersBy(
+                $filterFields["email"],
+                $filterFields["name"],
+                $filterFields["type"],
+            );
+            if ($result) {
+                echo json_encode($result);
+            } else {
+                http_response_code(500);
+                die;
+            }
+        }
+    }
+
     public function validate_user_details($userDetails, $ignorePassword = false) : bool {
         if (strlen($userDetails["name"]) < 1)
             return false;
