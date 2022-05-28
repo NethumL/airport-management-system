@@ -33,7 +33,7 @@ abstract class Controller
         if (session_status() == PHP_SESSION_NONE)
             session_start();
         return [
-            "user" => $_SESSION["user"] ?? [],
+            "user" => $_SESSION["user"] ?? null,
         ];
     }
 }
