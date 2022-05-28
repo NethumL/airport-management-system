@@ -77,7 +77,7 @@ class FlightManager extends AbstractManager
         }
     }
 
-    public static function getFlightsBy($begin = '', $end = '', $departureDate = '', $arrivalDate = '', $economyClassPrice = '', $businessClassPrice = '', $status = ''): array|false
+    public static function getFlightsBy($begin = '', $end = '', $departingAfter = '', $departingBefore = '', $economyClassPrice = '', $businessClassPrice = '', $status = ''): array|false
     {
         $query = "SELECT flight.*, b.name AS beginName, e.name as endName FROM flight JOIN airport b ON b.id = flight.begin JOIN airport e ON e.id = flight.end WHERE ";
         $params = [];
@@ -89,19 +89,15 @@ class FlightManager extends AbstractManager
             $query .= "end = ? AND ";
             $params[] = $end;
         }
-        if (!empty($departureDate)) {
-            $startTime = $departureDate . " 00:00:00";
-            $endTime = $departureDate . " 23:59:59";
-            $query .= "(departureDateTime BETWEEN ? AND ?) AND ";
-            $params[] = $startTime;
-            $params[] = $endTime;
+        if (!empty($departingAfter)) {
+            $afterTime = $departingAfter . " 00:00:00";
+            $query .= "departureDateTime >= ? AND ";
+            $params[] = $afterTime;
         }
-        if (!empty($arrivalDate)) {
-            $startTime = $arrivalDate . " 00:00:00";
-            $endTime = $arrivalDate . " 23:59:59";
-            $query .= "(arrivalDateTime BETWEEN ? AND ?) AND ";
-            $params[] = $startTime;
-            $params[] = $endTime;
+        if (!empty($departingBefore)) {
+            $beforeTime = $departingBefore . " 23:59:59";
+            $query .= "departureDateTime <= ? AND ";
+            $params[] = $beforeTime;
         }
         if (!empty($economyClassPrice)) {
             $query .= "economyClassPrice = ? AND ";

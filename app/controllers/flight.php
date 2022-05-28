@@ -116,8 +116,8 @@ class flight extends Controller
             $result = FlightManager::getFlightsBy(
                 $filterFields["begin"],
                 $filterFields["end"],
-                $filterFields["departureDate"],
-                $filterFields["arrivalDate"],
+                $filterFields["departingAfter"],
+                $filterFields["departingBefore"],
                 $filterFields["economyClassPrice"],
                 $filterFields["businessClassPrice"],
                 $filterFields["status"]
