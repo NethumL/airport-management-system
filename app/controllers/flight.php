@@ -3,6 +3,7 @@
 require_once __DIR__ . "/../utils.php";
 require_once __DIR__ . "/../models/UserManager.php";
 require_once __DIR__ . "/../models/FlightManager.php";
+require_once __DIR__ . "/../models/SeatManager.php";
 require_once __DIR__ . "/../models/BookingManager.php";
 require_once __DIR__ . "/../models/PaymentManager.php";
 
@@ -195,6 +196,66 @@ class flight extends Controller
             }
             $data["flight"] = $flight;
             $this->showView("flight/view", $data);
+        }
+    }
+
+    public function book(string $id)
+    {
+        session_start();
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $this->checkAuth("flight/book", function ($id) {
+                if ($_SESSION["user"]["userType"] != "CUSTOMER") {
+                    redirectRelative("home/index");
+                }
+                $data = $this->getViewData();
+
+                $flight = FlightManager::getFlight($id);
+                $seats = SeatManager::getSeatsBy($id);
+                if ($flight && $seats) {
+                    $data["flight"] = $flight;
+                    $data["seats"] = $seats;
+                } else {
+                    redirectRelative("home/index");
+                }
+
+                return $data;
+            }, [$id]);
+        } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $this->checkAuth("flight/book", function () {
+            });
+            if ($_SESSION["user"]["userType"] != "CUSTOMER") {
+                redirectRelative("home/index");
+            }
+
+            $flight = FlightManager::getFlight($id);
+            if (!$flight) {
+                redirectRelative("flight/index");
+            }
+
+            $bookedSeats = [];
+            foreach ($_POST as $key => $value) {
+                if (str_starts_with($key, "seat-")) {
+                    $seatId = substr($key, 5);
+                    $result = SeatManager::getSeat($seatId);
+                    if (!$result || $result["isBooked"]) {
+                        redirectRelative("flight/book/$seatId");
+                    }
+                    $bookedSeats[] = $seatId;
+                }
+            }
+
+            $bookingId = BookingManager::bookFlight($id, 0, $_SESSION["user"]["email"], $bookedSeats);
+
+            if ($bookingId) {
+                foreach ($bookedSeats as $seat) {
+                    SeatManager::updateBookingStatus($seat, 1);
+                }
+                create_flash_message("flight/pay", "Booking placed successfully.", FLASH_SUCCESS);
+                redirectRelative("flight/pay/$bookingId");
+            } else {
+                create_flash_message("flight/book", "Something went wrong.", FLASH_ERROR);
+                redirectRelative("flight/book/$bookingId");
+            }
         }
     }
 
