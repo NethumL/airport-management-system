@@ -11,7 +11,7 @@
 <body>
 
 <?php
-showNavbar($data);
+showNavbar($data, isset($data["user"]));
 ?>
 
 <main style="margin-top: 58px">
