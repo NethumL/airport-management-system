@@ -60,8 +60,8 @@ showNavbar($data);
             <td>2022/05/01 2 PM</td>
             <td>2022/05/05 5 PM</td>
             <td>100</td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-eye"></i></button></td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-pen-to-square fa-1x"></i></i></button></td>
+            <td><a class="btn" href="view/{1}" role="button"><i class="fa-solid fa-eye"></i></a></td>
+            <td><a class="btn" href="edit/{1}" role="button"><i class="fa-solid fa-pen-to-square fa-1x"></i></a></td>
           </tr>
           <tr>
             <td>Colombo</td>
@@ -69,8 +69,8 @@ showNavbar($data);
             <td>2022/05/01 2 PM</td>
             <td>2022/05/05 5 PM</td>
             <td>100</td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-eye"></i></button></td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-pen-to-square fa-1x"></i></i></button></td>
+            <td><a class="btn" href="view/{1}" role="button"><i class="fa-solid fa-eye"></i></a></td>
+            <td><a class="btn" href="edit/{1}" role="button"><i class="fa-solid fa-pen-to-square fa-1x"></i></a></td>
           </tr>
           <tr>
             <td>Colombo</td>
@@ -78,8 +78,8 @@ showNavbar($data);
             <td>2022/05/01 2 PM</td>
             <td>2022/05/05 5 PM</td>
             <td>100</td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-eye"></i></button></td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-pen-to-square fa-1x"></i></i></button></td>
+            <td><a class="btn" href="view/{1}" role="button"><i class="fa-solid fa-eye"></i></a></td>
+            <td><a class="btn" href="edit/{1}" role="button"><i class="fa-solid fa-pen-to-square fa-1x"></i></a></td>
           </tr>
           <tr>
             <td>Colombo</td>
@@ -87,8 +87,8 @@ showNavbar($data);
             <td>2022/05/01 2 PM</td>
             <td>2022/05/05 5 PM</td>
             <td>100</td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-eye"></i></button></td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-pen-to-square fa-1x"></i></i></button></td>
+            <td><a class="btn" href="view/{1}" role="button"><i class="fa-solid fa-eye"></i></a></td>
+            <td><a class="btn" href="edit/{1}" role="button"><i class="fa-solid fa-pen-to-square fa-1x"></i></a></td>
           </tr>
         </tbody>
       </table>
