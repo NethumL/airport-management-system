@@ -1,3 +1,9 @@
+<?php
+if (empty($user)) {
+    unset($user);
+}
+?>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand text-white ms-3" href="<?php echo htmlspecialchars(BASE_URL . 'home/index') ?>">
