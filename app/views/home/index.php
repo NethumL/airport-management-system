@@ -18,14 +18,16 @@ showNavbar($data);
     <h1 class="text-center" style="margin-top: 80px;"><?php echo htmlspecialchars($_ENV["AIRPORT_NAME"]) ?></h1>
     <div class="card col-sm-4 mx-auto mt-5">
         <div class="card-header text-white bg-primary">
-          Quick Links
+            Quick Links
         </div>
         <div class="card-body mb-2 d-flex justify-content-evenly">
-            <a type="button" class="btn btn-info text-white" href="<?php echo htmlspecialchars(BASE_URL . 'flight/index') ?>">
+            <a type="button" class="btn btn-info text-white"
+               href="<?php echo htmlspecialchars(BASE_URL . 'flight/index') ?>">
                 View all flights
             </a>
             <?php if (!isset($data["user"])) { ?>
-                <a type="button" class="btn btn-info text-white" href="<?php echo htmlspecialchars(BASE_URL . 'auth/register') ?>">
+                <a type="button" class="btn btn-info text-white"
+                   href="<?php echo htmlspecialchars(BASE_URL . 'auth/register') ?>">
                     Register new account
                 </a>
             <?php } ?>
