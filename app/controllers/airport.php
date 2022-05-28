@@ -136,4 +136,19 @@ class airport extends Controller
             }
         }
     }
+
+    public function search()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $name = $_GET["name"];
+
+            $result = AirportManager::getAirportsBy($name);
+            if ($result) {
+                echo json_encode($result);
+            } else {
+                http_response_code(500);
+                die;
+            }
+        }
+    }
 }
