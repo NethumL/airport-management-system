@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand rounded-2" href="<?php echo htmlspecialchars(BASE_URL . 'home/index') ?>" style="background-color:#337AB7;">
-            <div class="mx-5 fw-bold text-white">Foo Airport </div>
+        <a class="navbar-brand text-white ms-3" href="<?php echo htmlspecialchars(BASE_URL . 'home/index') ?>">
+            <?php echo htmlspecialchars($_ENV["AIRPORT_NAME"]) ?>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -20,7 +20,7 @@
             <ul class="navbar-nav">
                 <?php if ($isLoggedIn) { ?>
                     <li class="nav-item dropdown">
-                        <span class="dropdown-toggle nav-link" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="dropdown-toggle nav-link text-white" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <?php echo htmlspecialchars($user["name"]) ?>
                         </span>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarProfileDropdown">
@@ -36,12 +36,12 @@
                         </li-->
                     <?php } else { ?>
                     <li class="nav-item">
-                        <a class="nav-link active" href="<?php echo htmlspecialchars(BASE_URL . 'auth/login') ?>">
+                        <a class="nav-link active text-white" href="<?php echo htmlspecialchars(BASE_URL . 'auth/login') ?>">
                             Login
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="<?php echo htmlspecialchars(BASE_URL . 'auth/login') ?>">
+                        <a class="nav-link active text-white" href="<?php echo htmlspecialchars(BASE_URL . 'auth/register') ?>">
                             Register
                         </a>
                     </li>
