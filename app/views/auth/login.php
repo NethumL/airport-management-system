@@ -22,7 +22,7 @@
             padding-bottom: 2%;
         }
 
-        .btn{
+        .btn {
             width: 100%;
         }
 
@@ -64,7 +64,7 @@
                         <?php display_flash_message("auth/login") ?>
 
                         <!-- email -->
-                        <div class="row">              
+                        <div class="row">
                             <div class="col-md-3 col-sm-3 rounded text">
                                 <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Email</label>
                             </div>
@@ -77,7 +77,7 @@
 
                         <!-- password -->
                         <div class="row">
-                            
+
                             <div class="col-md-3 col-sm-3 rounded text">
                                 <label for="password" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Password</label>
                             </div>
@@ -92,14 +92,18 @@
                         <div class="row">
                             <div class="col-md-7 col-sm-7"></div>
                             <div class="col-md-4 col-sm-4">
-                                <a href="#" class="link-dark">Forgot Password?</a>
+                                <a class="link-dark" href="<?php echo htmlspecialchars(BASE_URL . 'auth/forgot_password') ?>">
+                                    Forgot Password?
+                                </a>
                             </div>
                             <div class="col-md-1 col-sm-1"></div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
-                                <button type="submit" class="btn btn-primary fw-bold">Register new account</button>
+                                <a class="btn btn-primary fw-bold" href="<?php echo htmlspecialchars(BASE_URL . 'auth/register') ?>">
+                                    Register new account
+                                </a>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <button type="submit" class="btn btn-success fw-bold">Login</button>
