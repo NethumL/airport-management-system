@@ -16,7 +16,7 @@ showNavbar($data);
 
 <main style="margin-top: 58px">
     <div style="margin-top: 70px;">
-        <?php display_flash_message("flight/index"); ?>
+        <?php display_flash_message("admin/edit"); ?>
     </div>
     <div id="alert-container">
     </div>

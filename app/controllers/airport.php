@@ -54,22 +54,18 @@ class airport extends Controller
             });
 
             if (!in_array($_SESSION["user"]["userType"], ["MANAGER", "EMPLOYEE"], true)) {
-                http_response_code(403);
-                die();
+                redirectRelative("home/index");
             }
 
             $data = $this->getViewData();
 
-            if (empty($id)) {
-                $data["airports"] = AirportManager::getAllAirports();
-            } else {
+            if (!empty($id)) {
                 $airport = AirportManager::getAirport($id);
 
                 if ($airport)
                     $data["airport"] = $airport;
                 else {
-                    http_response_code(404);
-                    die();
+                    redirectRelative("airport/edit");
                 }
             }
 

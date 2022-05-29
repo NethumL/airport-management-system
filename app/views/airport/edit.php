@@ -16,7 +16,7 @@ showNavbar($data);
 
 <main style="margin-top: 58px; margin-left: 10%">
     <div style="margin-top: 70px">
-        <?php display_flash_message("flight/index"); ?>
+        <?php display_flash_message("airport/edit"); ?>
     </div>
     <div id="alert-container">
     </div>
@@ -55,7 +55,7 @@ showNavbar($data);
         <?php if (isset($data["airport"])) { ?>
           <tr data-id="<?php echo htmlspecialchars($data['airport']['id']) ?>">
             <td><?php echo htmlspecialchars($data["airport"]["name"]) ?></td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-pen-to-square fa-1x"></i></i></button></td>
+            <td><button type="button" class="btn btn-warning"><i class="fa-solid fa-pen-to-square fa-1x"></i></i></button></td>
           </tr>
         <?php } ?>
         </tbody>
