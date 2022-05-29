@@ -3,6 +3,7 @@
 require_once __DIR__ . "/../utils.php";
 require_once __DIR__ . "/../models/UserManager.php";
 require_once __DIR__ . "/../models/FlightManager.php";
+require_once __DIR__ . "/../models/AirportManager.php";
 require_once __DIR__ . "/../models/SeatManager.php";
 require_once __DIR__ . "/../models/BookingManager.php";
 require_once __DIR__ . "/../models/PaymentManager.php";
@@ -26,9 +27,8 @@ class flight extends Controller
         session_start();
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $data = $this->getViewData();
-            if (empty($id)) {
-                $data["flights"] = FlightManager::getAllFlights();
-            } else {
+            $data["airports"] = AirportManager::getAllAirports();
+            if (!empty($id)) {
                 $flight = FlightManager::getFlight($id);
                 if ($flight) {
                     $data["flight"] = $flight;
@@ -127,7 +127,12 @@ class flight extends Controller
                 if (!in_array($_SESSION["user"]["userType"], ["EMPLOYEE", "MANAGER"], true)) {
                     redirectRelative("home/index");
                 }
-                return $this->getViewData();
+
+                $data = $this->getViewData();
+                $airports = AirportManager::getAllAirports();
+                $data["airports"] = $airports;
+
+                return $data;
             });
         } else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
             $this->checkAuth("flight/new", function () {
