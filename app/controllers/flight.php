@@ -3,6 +3,8 @@
 require_once __DIR__ . "/../utils.php";
 require_once __DIR__ . "/../models/UserManager.php";
 require_once __DIR__ . "/../models/FlightManager.php";
+require_once __DIR__ . "/../models/AirportManager.php";
+require_once __DIR__ . "/../models/SeatManager.php";
 require_once __DIR__ . "/../models/BookingManager.php";
 require_once __DIR__ . "/../models/PaymentManager.php";
 
@@ -12,30 +14,26 @@ class flight extends Controller
         "airline",
         "begin",
         "end",
-        "departureDate",
-        "departureTime",
-        "arrivalDate",
-        "arrivalTime",
+        "departureDateTime",
+        "arrivalDateTime",
         "economyClassPrice",
         "businessClassPrice",
         "status"
     ];
-    const PAYMENT_FIELDS = ["creditCardNumber", "paidAmount"];
+    const PAYMENT_FIELDS = ["creditCardNumber"];
 
     public function index(string $id = "")
     {
         session_start();
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $data = $this->getViewData();
-            if (empty($id)) {
-                $data["flights"] = FlightManager::getAllFlights();
-            } else {
+            $data["airports"] = AirportManager::getAllAirports();
+            if (!empty($id)) {
                 $flight = FlightManager::getFlight($id);
                 if ($flight) {
                     $data["flight"] = $flight;
                 } else {
-                    http_response_code(404);
-                    die;
+                    redirectRelative("flight/index");
                 }
             }
             $this->showView("flight/index", $data);
@@ -60,9 +58,6 @@ class flight extends Controller
                 http_response_code(400);
                 die;
             }
-
-            $flightDetails["departureDateTime"] = mergeDateTime($flightDetails["departureDate"], $flightDetails["departureTime"]);
-            $flightDetails["arrivalDateTime"] = mergeDateTime($flightDetails["arrivalDate"], $flightDetails["arrivalTime"]);
 
             $result = FlightManager::editFlight(
                 $id,
@@ -111,16 +106,9 @@ class flight extends Controller
     public function search()
     {
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            $filterFields = filterArrayByKeys($_GET, self::FIELDS);
-
             $result = FlightManager::getFlightsBy(
-                $filterFields["begin"],
-                $filterFields["end"],
-                $filterFields["departingAfter"],
-                $filterFields["departingBefore"],
-                $filterFields["economyClassPrice"],
-                $filterFields["businessClassPrice"],
-                $filterFields["status"]
+                $_GET["from"],
+                $_GET["to"]
             );
             if ($result) {
                 echo json_encode($result);
@@ -138,9 +126,14 @@ class flight extends Controller
                 if (!in_array($_SESSION["user"]["userType"], ["EMPLOYEE", "MANAGER"], true)) {
                     redirectRelative("home/index");
                 }
-                return $this->getViewData();
+
+                $data = $this->getViewData();
+                $airports = AirportManager::getAllAirports();
+                $data["airports"] = $airports;
+
+                return $data;
             });
-        } else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
+        } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $this->checkAuth("flight/new", function () {
             });
             if (!in_array($_SESSION["user"]["userType"], ["EMPLOYEE", "MANAGER"], true)) {
@@ -149,7 +142,9 @@ class flight extends Controller
 
             $flightDetails = filterArrayByKeys($_POST, self::FIELDS);
 
-            $undefinedFields = getUnsetKeys($flightDetails, self::FIELDS);
+            $undefinedFields = getUnsetKeys($flightDetails, array_filter(self::FIELDS, function ($field) {
+                return $field != "status";
+            }));
 
             if (!empty($undefinedFields)) {
                 create_flash_message("flight/new", "All fields are required.", FLASH_ERROR);
@@ -161,9 +156,6 @@ class flight extends Controller
                 redirectRelative("flight/new");
             }
 
-            $flightDetails["departureDateTime"] = mergeDateTime($flightDetails["departureDate"], $flightDetails["departureTime"]);
-            $flightDetails["arrivalDateTime"] = mergeDateTime($flightDetails["arrivalDate"], $flightDetails["arrivalTime"]);
-
             $result = FlightManager::addFlight(
                 $flightDetails["airline"],
                 $flightDetails["begin"],
@@ -172,9 +164,17 @@ class flight extends Controller
                 $flightDetails["arrivalDateTime"],
                 $flightDetails["economyClassPrice"],
                 $flightDetails["businessClassPrice"],
-                $flightDetails["status"]
+                "SCHEDULED"
             );
+
             if ($result) {
+                $planeWidth = (int)$_ENV["PLANE_WIDTH"];
+                $planeLength = (int)$_ENV["PLANE_LENGTH"];
+                for ($x = 65; $x <= 64 + $planeWidth; $x++) {
+                    for ($y = 1; $y <= $planeLength; $y++) {
+                        SeatManager::addSeat(chr($x), $y, $result, $y <= $planeLength / 2 ? "ECONOMY" : "BUSINESS");
+                    }
+                }
                 create_flash_message("flight/new", "Flight added successfully.", FLASH_SUCCESS);
             } else {
                 create_flash_message("flight/new", "Something went wrong.", FLASH_ERROR);
@@ -198,6 +198,66 @@ class flight extends Controller
         }
     }
 
+    public function book(string $id)
+    {
+        session_start();
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $this->checkAuth("flight/book", function ($id) {
+                if ($_SESSION["user"]["userType"] != "CUSTOMER") {
+                    redirectRelative("home/index");
+                }
+                $data = $this->getViewData();
+
+                $flight = FlightManager::getFlight($id);
+                $seats = SeatManager::getSeatsBy($id);
+                if ($flight && $seats) {
+                    $data["flight"] = $flight;
+                    $data["seats"] = $seats;
+                } else {
+                    redirectRelative("home/index");
+                }
+
+                return $data;
+            }, [$id]);
+        } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $this->checkAuth("flight/book", function () {
+            });
+            if ($_SESSION["user"]["userType"] != "CUSTOMER") {
+                redirectRelative("home/index");
+            }
+
+            $flight = FlightManager::getFlight($id);
+            if (!$flight) {
+                redirectRelative("flight/index");
+            }
+
+            $bookedSeats = [];
+            foreach ($_POST as $key => $value) {
+                if (str_starts_with($key, "seat-")) {
+                    $seatId = substr($key, 5);
+                    $result = SeatManager::getSeat($seatId);
+                    if (!$result || $result["isBooked"]) {
+                        redirectRelative("flight/book/$seatId");
+                    }
+                    $bookedSeats[] = $seatId;
+                }
+            }
+
+            $bookingId = BookingManager::bookFlight($id, 0, $_SESSION["user"]["email"], $bookedSeats);
+
+            if ($bookingId) {
+                foreach ($bookedSeats as $seat) {
+                    SeatManager::updateBookingStatus($seat, 1);
+                }
+                create_flash_message("flight/pay", "Booking placed successfully.", FLASH_SUCCESS);
+                redirectRelative("flight/pay/$bookingId");
+            } else {
+                create_flash_message("flight/book", "Something went wrong.", FLASH_ERROR);
+                redirectRelative("flight/book/$bookingId");
+            }
+        }
+    }
+
     public function pay(string $id)
     {
         session_start();
@@ -212,14 +272,25 @@ class flight extends Controller
         if (!$booking || $booking["email"] != $_SESSION["user"]["email"]) {
             redirectRelative("home/index");
         }
+        $flight = FlightManager::getFlight($booking["flightNumber"]);
+        $seats = [];
+        $amount = 0;
+        foreach ($booking["seats"] as $seatId) {
+            $seat = SeatManager::getSeat($seatId);
+            $amount += $seat["class"] == "ECONOMY" ? $flight["economyClassPrice"] : $flight["businessClassPrice"];
+            $seats[] = $seat;
+        }
 
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $data = $this->getViewData();
 
             $data["booking"] = $booking;
+            $data["flight"] = $flight;
+            $data["seats"] = $seats;
+            $data["amount"] = $amount;
 
             $this->showView("flight/pay", $data);
-        } else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
+        } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $paymentDetails = filterArrayByKeys($_POST, self::PAYMENT_FIELDS);
 
             $undefinedFields = getUnsetKeys($paymentDetails, self::PAYMENT_FIELDS);
@@ -236,7 +307,7 @@ class flight extends Controller
 
             $result = PaymentManager::addPayment(
                 $paymentDetails["creditCardNumber"],
-                $paymentDetails["paidAmount"],
+                $amount,
                 $_SESSION["user"]["email"],
                 $id,
             );

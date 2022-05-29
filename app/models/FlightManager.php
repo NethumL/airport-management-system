@@ -4,10 +4,15 @@ require_once __DIR__ . '/AbstractManager.php';
 
 class FlightManager extends AbstractManager
 {
-    public static function addFlight($airline, $begin, $end, $departureDateTime, $arrivalDateTime, $economyClassPrice, $businessClassPrice, $status): bool
+    public static function addFlight($airline, $begin, $end, $departureDateTime, $arrivalDateTime, $economyClassPrice, $businessClassPrice, $status): int|bool
     {
         $stmt = self::$db->prepare("INSERT INTO flight(airline, begin, end, departureDateTime, arrivalDateTime, economyClassPrice, businessClassPrice, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
-        return $stmt->execute([$airline, $begin, $end, $departureDateTime, $arrivalDateTime, $economyClassPrice, $businessClassPrice, $status]);
+        $result = $stmt->execute([$airline, $begin, $end, $departureDateTime, $arrivalDateTime, $economyClassPrice, $businessClassPrice, $status]);
+        if ($result) {
+            return self::$db->lastInsertId();
+        } else {
+            return $result;
+        }
     }
 
     public static function editFlight($id, $airline, $begin, $end, $departureDateTime, $arrivalDateTime, $economyClassPrice, $businessClassPrice, $status): bool
@@ -82,11 +87,11 @@ class FlightManager extends AbstractManager
         $query = "SELECT flight.*, b.name AS beginName, e.name as endName FROM flight JOIN airport b ON b.id = flight.begin JOIN airport e ON e.id = flight.end WHERE ";
         $params = [];
         if (!empty($begin)) {
-            $query .= "begin = ? AND ";
+            $query .= "b.name = ? AND ";
             $params[] = $begin;
         }
         if (!empty($end)) {
-            $query .= "end = ? AND ";
+            $query .= "e.name = ? AND ";
             $params[] = $end;
         }
         if (!empty($departingAfter)) {

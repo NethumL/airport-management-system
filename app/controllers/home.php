@@ -11,24 +11,22 @@ class home extends Controller
     {
         session_start();
 
-        if (isset($_SESSION['user'])) {
+        if (isset($_SESSION["user"]) && $_SESSION["user"]["userType"] == "CUSTOMER") {
             $this->checkAuth("home/index", function () {
                 $data = $this->getViewData();
                 $user = $_SESSION["user"];
 
-                if ($user["userType"] === "CUSTOMER") {
-                    $result = BookingManager::getBookingBy($user["email"]);
-                    $bookings = [];
-                    foreach ($result as $booking) {
-                        $flight = FlightManager::getFlight($booking["flightNumber"]);
-                        $seats = [];
-                        foreach ($booking['seats'] as $seatId) {
-                            $seats[] = SeatManager::getSeat($seatId);
-                        }
-                        $bookings[] = [...$booking, "flight" => $flight, "seats" => $seats];
+                $result = BookingManager::getBookingBy($user["email"]);
+                $bookings = [];
+                foreach ($result as $booking) {
+                    $flight = FlightManager::getFlight($booking["flightNumber"]);
+                    $seats = [];
+                    foreach ($booking['seats'] as $seatId) {
+                        $seats[] = SeatManager::getSeat($seatId);
                     }
-                    $data["bookings"] = $bookings;
+                    $bookings[] = [...$booking, "flight" => $flight, "seats" => $seats];
                 }
+                $data["bookings"] = $bookings;
                 return $data;
             });
         }
