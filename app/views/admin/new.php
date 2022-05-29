@@ -39,10 +39,13 @@
     showNavbar($data);
     ?>
 
-    <main style="margin-top: 150px">
-        <div class="login-form d-flex justify-content-center" style="margin-top: 63px;">
-
-
+    <main style="margin-top: 80px">
+        <div class="d-flex">
+            <div class="mx-auto">
+                <?php display_flash_message("admin/new"); ?>
+            </div>
+        </div>
+        <div class="login-form d-flex justify-content-center" style="margin-top: 30px;">
             <div class="card col-sm-5 mx-auto ">
                 <div class="card-header text-white bg-primary">
                     Add Employee
