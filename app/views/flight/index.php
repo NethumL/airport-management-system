@@ -27,7 +27,7 @@ showNavbar($data);
         </div>
     </div>
 
-    <div class="mx-5 mb-5">
+    <div class="mb-5" style="margin-left: 5rem;">
         <form method="POST" id="filter-form">
             <div class="row">
                 <label for="filterFrom" class="col-md-1 offset-md-2 col-sm-5 rounded-2 col-form-label">From</label>
