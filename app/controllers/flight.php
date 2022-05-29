@@ -272,11 +272,22 @@ class flight extends Controller
         if (!$booking || $booking["email"] != $_SESSION["user"]["email"]) {
             redirectRelative("home/index");
         }
+        $flight = FlightManager::getFlight($booking["flightNumber"]);
+        $seats = [];
+        $amount = 0;
+        foreach ($booking["seats"] as $seatId) {
+            $seat = SeatManager::getSeat($seatId);
+            $amount += $seat["class"] == "ECONOMY" ? $flight["economyClassPrice"] : $flight["businessClassPrice"];
+            $seats[] = $seat;
+        }
 
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $data = $this->getViewData();
 
             $data["booking"] = $booking;
+            $data["flight"] = $flight;
+            $data["seats"] = $seats;
+            $data["amount"] = $amount;
 
             $this->showView("flight/pay", $data);
         } else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
@@ -296,7 +307,7 @@ class flight extends Controller
 
             $result = PaymentManager::addPayment(
                 $paymentDetails["creditCardNumber"],
-                $paymentDetails["paidAmount"],
+                $amount,
                 $_SESSION["user"]["email"],
                 $id,
             );
