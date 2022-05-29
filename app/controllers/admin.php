@@ -150,6 +150,8 @@ class admin extends Controller {
                 die();
             }
 
+            $email = urldecode($email);
+
             $result = UserManager::getUserDetails($email);
             if (!$result) {
                 http_response_code(404);
