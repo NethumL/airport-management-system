@@ -87,11 +87,11 @@ class FlightManager extends AbstractManager
         $query = "SELECT flight.*, b.name AS beginName, e.name as endName FROM flight JOIN airport b ON b.id = flight.begin JOIN airport e ON e.id = flight.end WHERE ";
         $params = [];
         if (!empty($begin)) {
-            $query .= "begin = ? AND ";
+            $query .= "b.name = ? AND ";
             $params[] = $begin;
         }
         if (!empty($end)) {
-            $query .= "end = ? AND ";
+            $query .= "e.name = ? AND ";
             $params[] = $end;
         }
         if (!empty($departingAfter)) {
