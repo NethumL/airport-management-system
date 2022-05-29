@@ -133,7 +133,7 @@ class flight extends Controller
 
                 return $data;
             });
-        } else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
+        } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $this->checkAuth("flight/new", function () {
             });
             if (!in_array($_SESSION["user"]["userType"], ["EMPLOYEE", "MANAGER"], true)) {
