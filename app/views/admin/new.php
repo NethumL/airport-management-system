@@ -48,8 +48,7 @@
                     Add Employee
                 </div>
                 <div class="card-body mb-2 fw-bold border-primary">
-                    <form action="edit" method="post">
-
+                    <form action="new" method="post">
                         <!-- email -->
                         <div class="row">
                             <div class="col-md-4 col-sm-4 rounded text">
@@ -57,7 +56,7 @@
                             </div>
 
                             <div class="col-md-7 col-sm-7 rounded">
-                                <input type="text" class="form-control" name="email" id="email" required="required">
+                                <input type="email" class="form-control" name="email" id="email" required="required">
                             </div>
                             <div class="col-md-1 col-sm-1"></div>
                         </div>
@@ -80,7 +79,7 @@
                             </div>
 
                             <div class="col-md-7 col-sm-7 rounded">
-                                <input type="text" class="form-control" name="userType" id="userType" value ="Employee" disabled required="required">
+                                <input type="text" class="form-control" name="userType" id="userType" value ="EMPLOYEE" readonly required="required">
                             </div>
                             <div class="col-md-1 col-sm-1"></div>
                         </div>
@@ -100,7 +99,6 @@
                         <div class="row">
                             <div class="col-md-7 col-sm-7"></div>
 
-                            <!-- regitser button -->
                             <div class="col-md-4 col-sm-4">
                                 <button type="submit" class="btn btn-success fw-bold">Add</button>
                             </div>
