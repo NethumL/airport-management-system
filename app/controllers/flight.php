@@ -107,16 +107,9 @@ class flight extends Controller
     public function search()
     {
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            $filterFields = filterArrayByKeys($_GET, self::FIELDS);
-
             $result = FlightManager::getFlightsBy(
-                $filterFields["begin"],
-                $filterFields["end"],
-                $filterFields["departingAfter"],
-                $filterFields["departingBefore"],
-                $filterFields["economyClassPrice"],
-                $filterFields["businessClassPrice"],
-                $filterFields["status"]
+                $_GET["from"],
+                $_GET["to"]
             );
             if ($result) {
                 echo json_encode($result);
