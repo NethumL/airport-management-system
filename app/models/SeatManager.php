@@ -58,7 +58,7 @@ class SeatManager extends AbstractManager
             $query .= "AND class = ?";
             $params[] = $class;
         }
-        $query .= ";";
+        $query .= " ORDER BY yPosition, xPosition;";
         $stmt = self::$db->prepare($query);
         $stmt->execute($params);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
