@@ -184,6 +184,28 @@ showNavbar($data);
     <?php } ?>
 
 </main>
+
+<script>
+    let canEdit;
+    <?php if (isset($data["user"]) && in_array($data["user"]["userType"], ["MANAGER", "EMPLOYEE"], true)) { ?>
+    canEdit = true;
+    <?php } else { ?>
+    canEdit = false;
+    <?php } ?>
+</script>
+
+<script src="<?php echo htmlspecialchars(BASE_URL . 'public/js/flight-index.js') ?>"></script>
+
+<?php if (isset($data["flight"])) { ?>
+    <script>
+        if (canEdit) {
+            const row = table.querySelector("tbody tr");
+            if (row)
+                editFlight(row);
+        }
+    </script>
+<?php } ?>
+
 </body>
 
 </html>
