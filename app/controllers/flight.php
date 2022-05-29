@@ -33,8 +33,7 @@ class flight extends Controller
                 if ($flight) {
                     $data["flight"] = $flight;
                 } else {
-                    http_response_code(404);
-                    die;
+                    redirectRelative("flight/index");
                 }
             }
             $this->showView("flight/index", $data);
