@@ -101,6 +101,18 @@ showNavbar($data);
         </form>
     </div>
 </main>
+
+
+<script src="<?php echo htmlspecialchars(BASE_URL . 'public/js/admin-edit.js') ?>"></script>
+
+<?php if (isset($data["showUser"])) { ?>
+    <script>
+        const row = table.querySelector("tbody tr");
+        if (row)
+            editUser(row);
+    </script>
+<?php } ?>
+
 </body>
 
 </html>
