@@ -85,6 +85,16 @@ showNavbar($data);
 
 </main>
 
+<script src="<?php echo htmlspecialchars(BASE_URL . 'public/js/airport-edit.js') ?>"></script>
+
+<?php if (isset($data["airport"])) { ?>
+    <script>
+        const row = table.querySelector("tbody tr");
+        if (row)
+            editAirport(row);
+    </script>
+<?php } ?>
+
 </body>
 
 </html>
