@@ -166,7 +166,15 @@ class flight extends Controller
                 $flightDetails["businessClassPrice"],
                 "SCHEDULED"
             );
+
             if ($result) {
+                $planeWidth = (int)$_ENV["PLANE_WIDTH"];
+                $planeLength = (int)$_ENV["PLANE_LENGTH"];
+                for ($x = 96; $x <= 95 + $planeWidth; $x++) {
+                    for ($y = 1; $y <= $planeLength; $y++) {
+                        SeatManager::addSeat(chr($x), $y, $result, $y <= $planeLength / 2 ? "ECONOMY" : "BUSINESS");
+                    }
+                }
                 create_flash_message("flight/new", "Flight added successfully.", FLASH_SUCCESS);
             } else {
                 create_flash_message("flight/new", "Something went wrong.", FLASH_ERROR);
