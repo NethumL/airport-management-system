@@ -32,9 +32,8 @@
             padding-bottom: 2%;
         }
 
-        .btn-primary {
+        .btn-success {
             width: 80%;
-            background-color: #337AB7;
         }
     </style>
 </head>
@@ -91,7 +90,7 @@
                         <div class="row">
                             <div class="col-md-9 col-sm-9"></div>
                             <div class="col-md-3 col-sm-3">
-                                <button type="submit" class="btn btn-primary fw-bold">Reset</button>
+                                <button type="submit" class="btn btn-success fw-bold">Reset</button>
                             </div>
 
                         </div>
