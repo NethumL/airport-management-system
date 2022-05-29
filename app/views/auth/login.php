@@ -7,12 +7,6 @@
     <title>Login</title>
     <?php include __DIR__ . "/../templates/head.php" ?>
     <style>
-        .login-form form {
-            background: white;
-            /* box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3); */
-            /* padding: 30px; */
-        }
-
         .text {
             text-align: right;
         }
@@ -24,14 +18,6 @@
 
         .btn {
             width: 100%;
-        }
-
-        .btn-primary {
-            background-color: #337AB7;
-        }
-
-        .btn-success {
-            background-color: #5db85c;
         }
 
         .card-body {
@@ -54,7 +40,7 @@
 
 
             <div class="card col-sm-5 mx-auto ">
-                <div class="card-header text-white" style="background-color:#337AB7;">
+                <div class="card-header text-white bg-primary">
                     Log In
                 </div>
                 <div class="card-body mb-2 fw-bold">
