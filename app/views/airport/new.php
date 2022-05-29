@@ -40,6 +40,11 @@
     ?>
 
     <main style="margin-top: 13%">
+        <div class="d-flex">
+            <div class="mx-auto">
+                <?php display_flash_message("airport/new"); ?>
+            </div>
+        </div>
         <div class="login-form d-flex justify-content-center " style="margin-top: 63px;">
 
 
