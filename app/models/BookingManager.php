@@ -13,7 +13,7 @@ class BookingManager extends AbstractManager
             $stmt->execute();
             $bookingId = $stmt->fetch();
             self::bookSeats($seats, $bookingId[0]);
-            return $bookingId;
+            return $bookingId[0];
         } else {
             return $success;
         }
