@@ -45,6 +45,7 @@
     ?>
 
     <main style="margin-top: 10%;">
+        <?php display_flash_message("auth/forgot-password"); ?>
         <div class="login-form d-flex justify-content-center">
             <div class="card col-sm-5 mx-auto">
                 <div class="card-header text-white">
