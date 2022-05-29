@@ -70,24 +70,18 @@ class admin extends Controller {
             });
 
             if ($_SESSION["user"]["userType"] !== "MANAGER") {
-                http_response_code(403);
-                die();
+                redirectRelative("home/index");
             }
 
             $data = $this->getViewData();
 
-            if (empty($email)) {
-                $data["showUsers"] = UserManager::getUsersBy();
-
-            } else {
+            if (!empty($email)) {
                 $user = UserManager::getUserDetails($email);
 
                 if ($user)
                     $data["showUser"] = $user;
-                else {
-                    http_response_code(404);
-                    die();
-                }
+                else
+                    redirectRelative("admin/edit");
             }
 
             $this->showView("admin/edit", $data);
@@ -104,6 +98,8 @@ class admin extends Controller {
                 http_response_code(400);
                 die();
             }
+
+            $email = urldecode($email);
 
             $result = UserManager::getUserDetails($email);
             if (!$result) {
@@ -154,6 +150,8 @@ class admin extends Controller {
                 die();
             }
 
+            $email = urldecode($email);
+
             $result = UserManager::getUserDetails($email);
             if (!$result) {
                 http_response_code(404);
@@ -185,7 +183,7 @@ class admin extends Controller {
             $result = UserManager::getUsersBy(
                 $filterFields["email"],
                 $filterFields["name"],
-                $filterFields["type"],
+                "",
             );
             if ($result) {
                 echo json_encode($result);

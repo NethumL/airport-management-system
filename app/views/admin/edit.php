@@ -14,129 +14,105 @@
 showNavbar($data);
 ?>
 
-<main style="margin-top: 58px; margin-left: 10%">
-<div class="row justify-content-center ms-5"> 
-    <div style="margin-top: 63px;">   
-        <div class="px-5 py-4 fw-bold h5 w-25" >
-            <span class= "mx-5  py-2 px-3 rounded-3">Filter</span>
+<main style="margin-top: 58px">
+    <div style="margin-top: 70px;">
+        <?php display_flash_message("flight/index"); ?>
+    </div>
+    <div id="alert-container">
+    </div>
+    <div class="container">
+        <div class="px-5 py-3 fw-bold h5 w-25" >
+            <span class= "mx-5 py-2 px-3 rounded-3">Filter</span>
         </div>
-      
     </div>
-    
-    <div class= "mx-5 mb-5">
-        <form method="POST">  
-            <div class="row fw-bold col-md-10 col-sm-10">
-                <div class="row col-md-4  col-sm-5 form-group m-3 mx-auto">
-                    <label for="from" class="col-md-4  col-sm-5 me-1 rounded-2 col-form-label">Email</label>
-                    <div class="col-md-6 col-sm-6 rounded">
-                        <input type="email" class="form-control" id="email">
-                    </div>
+
+    <div class="mb-5" style="margin-left: 5rem;">
+        <form method="POST" id="filter-form">
+            <div class="row">
+                <label for="filterEmail" class="col-md-1 offset-md-2 col-sm-5 rounded-2 col-form-label">Email</label>
+                <div class="col-md-2 col-sm-6 rounded">
+                    <input type="text" class="form-control" name="email" id="filterEmail">
                 </div>
-                <div class="row col-md-4  col-sm-5 form-group m-3 mx-auto">
-                    <label for="to" class="col-md-4  col-sm-5 me-1 rounded-2 col-form-label">Name</label>
-                    <div class="col-md-6 col-sm-6 rounded">
-                        <input type="text" class="form-control" id="name">
-                    </div>
-                </div>    
+                <label for="filterName" class="col-md-1 col-sm-5 rounded-2 col-form-label">Name</label>
+                <div class="col-md-2 col-sm-6 rounded">
+                    <input type="text" class="form-control" name="name" id="filterName">
+                </div>
+                <div class="col-md-2 offset-md-1">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
             </div>
         </form>
     </div>
-    
-    <div class="table-responsive">
-    <table class="table w-auto" style="margin-left:25%">
-        <thead>
-          <tr>
-            <th class="pe-5" scope="col">Email <i class="ms-1 fa-solid fa-sort"></i></th>
-            <th class="pe-5" scope="col">Name<i class="ms-1 fa-solid fa-sort"></i></th>
-            <th class="pe-5" scope="col">userType <i class="ms-1"></i></th>
-            <th class="pe-5" scope="col">Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr > 
-            <td>Laksi@gmail.com</td>
-            <td>Laksika</td>
-            <td>Employee</td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-pen-to-square fa-1x"></i></i></button></td>
-          </tr>
-          <tr > 
-            <td>Laksi@gmail.com</td>
-            <td>Laksika</td>
-            <td>Employee</td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-pen-to-square fa-1x"></i></i></button></td>
-          </tr>
-          <tr > 
-            <td>Laksi@gmail.com</td>
-            <td>Laksika</td>
-            <td>Employee</td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-pen-to-square fa-1x"></i></i></button></td>
-          </tr>
-          <tr > 
-            <td>Laksi@gmail.com</td>
-            <td>Laksika</td>
-            <td>Employee</td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-pen-to-square fa-1x"></i></i></button></td>
-          </tr>
-          <tr > 
-            <td>Laksi@gmail.com</td>
-            <td>Laksika</td>
-            <td>Employee</td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-pen-to-square fa-1x"></i></i></button></td>
-          </tr>
-          <tr > 
-            <td>Laksi@gmail.com</td>
-            <td>Laksika</td>
-            <td>Employee</td>
-            <td><button type="button" class="btn"><i class="fa-solid fa-pen-to-square fa-1x"></i></i></button></td>
-          </tr>
-        </tbody>
-      </table>
+
+    <div class="table-responsive d-flex">
+        <table class="table w-auto mx-auto" id="user-table" style="margin-left: 180px">
+            <thead>
+            <tr>
+                <th scope="col">Email <span><i class="fas fa-solid fa-sort"></i></span></th>
+                <th scope="col">Name <span><i class="fas fa-solid fa-sort"></i></span></th>
+                <th scope="col">User type <span><i class="fas fa-solid fa-sort"></i></span></th>
+                <th scope="col">Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php if (isset($data["showUser"])) { ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($data["showUser"]["email"]) ?></td>
+                    <td><?php echo htmlspecialchars($data["showUser"]["name"]) ?></td>
+                    <td><?php echo htmlspecialchars($data["showUser"]["userType"]) ?></td>
+                    <td>
+                        <button class="btn btn-warning edit-button"><i class="fa-solid fa-pen-to-square fa-1x"></i></button>
+                    </td>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
     </div>
-    <div class="ms-5">
-        <span class="ms-5"><a class="mx-5 fw-bold btn btn-success" href="admin/new" role="button">Add New Employee</a><span>
-    </div>
-    <div class= "m-5">
-        <form method="POST">  
-            <div class="row fw-bold col-md-10 col-sm-10">
-                <div class="row col-md-4  col-sm-5 form-group m-3 mx-auto">
-                    <label for="email" class="col-md-4  col-sm-5 rounded-2 col-form-label">Email</label>
-                    <div class="col-md-6 col-sm-6 rounded">
-                        <input type="email" class="form-control" id="email">
+
+    <div class="m-5">
+        <form method="POST" class="container" id="update-form">
+            <div class="row fw-bold">
+                <div class="row">
+                    <label for="email" class="col-sm-1 offset-sm-2 rounded-2 col-form-label">Email</label>
+                    <div class="col-sm-3 rounded">
+                        <input type="text" class="form-control" name="email" id="email" readonly>
+                    </div>
+                    <label for="name" class="col-sm-1 offset-sm-1 me-1 rounded-2 col-form-label">Name</label>
+                    <div class="col-sm-3 rounded">
+                        <input type="text" class="form-control" name="name" id="name">
                     </div>
                 </div>
-                <div class="row col-md-4  col-sm-5 form-group m-3 mx-auto">
-                    <label for="name" class="col-md-4  col-sm-5 me-1 rounded-2 col-form-label">Name</label>
-                    <div class="col-md-6 col-sm-6 rounded">
-                        <input type="text" class="form-control" id="name">
-                    </div>
-                </div>    
             </div>
-      
-            <div class="row fw-bold col-md-10 col-sm-10">
-                <div class="row col-md-4  col-sm-5 form-group m-3 mx-auto">
-                    <label for="userType" class="col-md-4  col-sm-5 rounded-2 col-form-label">UserType</label>
-                    <div class="col-md-6 col-sm-6 rounded">
-                        <input type="text" class="form-control" id="userType" value= "Employee" disabled> 
+
+            <div class="row fw-bold mt-5">
+                <div class="row">
+                    <label for="userType" class="col-sm-1 offset-sm-2 rounded-2 col-form-label">Type</label>
+                    <div class="col-sm-3 rounded">
+                        <input type="text" class="form-control" name="userType" id="userType" readonly>
                     </div>
                 </div>
-                <div class="row col-md-4  col-sm-5 form-group m-3 mx-auto">
-                    <label for="password" class="col-md-4  col-sm-5 me-1 rounded-2 col-form-label">Password</label>
-                    <div class="col-md-6 col-sm-6 rounded">
-                        <input type="text" class="form-control" id="password">
-                    </div>
-                </div>    
             </div>
-              
+
+            <div class="col-md-10 mt-5">
+                <button id="update-button" type="submit" class="btn btn-success m-3 float-end">Update</button>
+                <button id="clear-button" type="button" class="btn btn-warning m-3 float-end">Clear</button>
+                <button id="delete-button" type="button" class="btn btn-danger m-3 float-end">Delete</button>
+            </div>
         </form>
-   </div>
-</div>
-    <div class="col-md-10 ">
-        <button type="button" class="btn btn-success m-3 float-end">Update</button>
-        <button type="button" class="btn btn-warning m-3 float-end">Clear</button>
-        <button type="button" class="btn btn-danger m-3 float-end">Delete</button>
     </div>
- 
 </main>
+
+
+<script src="<?php echo htmlspecialchars(BASE_URL . 'public/js/admin-edit.js') ?>"></script>
+
+<?php if (isset($data["showUser"])) { ?>
+    <script>
+        const row = table.querySelector("tbody tr");
+        if (row)
+            editUser(row);
+    </script>
+<?php } ?>
+
 </body>
 
 </html>
