@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="card-body mb-2 fw-bold">
-                    <form action="forgot_password" method="post">
+                    <form action="<?php echo htmlspecialchars(BASE_URL . 'auth/reset-password/' . $data['token']) ?>" method="post">
 
                         <div class="row">
                             <div class="col-md-9 col-sm-3 rounded text">
@@ -67,7 +67,7 @@
                             </div>
 
                             <div class="col-md-6 col-sm-6 rounded">
-                                <input type="text" class="form-control" name="password" id="password" required="required">
+                                <input type="password" class="form-control" name="password" id="password" required="required">
                             </div>
 
                             <div class="col-md-2 col-sm-2"></div>
@@ -80,7 +80,7 @@
                             </div>
 
                             <div class="col-md-6 col-sm-6 rounded">
-                                <input type="text" class="form-control" name="confirm_password" id="confirm_password" required="required">
+                                <input type="password" class="form-control" name="confirm_password" id="confirm_password" required="required">
                             </div>
 
                             <div class="col-md-2 col-sm-2"></div>
