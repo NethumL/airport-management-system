@@ -20,6 +20,11 @@
             border-width: 2px;
             font-size: 90%;
         }
+
+        .seat-grid {
+            display: grid;
+            grid-template-columns: repeat(<?php echo htmlspecialchars($_ENV["PLANE_WIDTH"]) ?>, 1fr);
+        }
     </style>
 </head>
 
@@ -31,14 +36,14 @@
 
     <main style="margin-top: 150px">
         <div class="d-flex justify-content-center" style="margin-top: 63px;">
-            <div class="card col-md-5 col-sm-7 mx-auto ">
+            <div class="card col-md-7 col-sm-7 mx-auto mb-5">
                 <div class="card-header text-white bg-primary">
                     Book
                 </div>
                 <div class="card-body border-primary">
                     <!-- Airline -->
                     <div class="row">
-                        <div class="col-md-4 col-sm-4 rounded text fw-bold ">
+                        <div class="col-md-3 col-sm-4 rounded text fw-bold ">
                             <label for="airline" class="col-md-8  col-sm-5 rounded-2 col-form-label">Airline:</label>
                         </div>
 
@@ -51,7 +56,7 @@
                     </div>
                     <!-- From -->
                     <div class="row">
-                        <div class="col-md-4 col-sm-4 rounded text fw-bold ">
+                        <div class="col-md-3 col-sm-4 rounded text fw-bold ">
                             <label for="from" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">From:</label>
                         </div>
 
@@ -64,7 +69,7 @@
 
                     <!-- To -->
                     <div class="row">
-                        <div class="col-md-4 col-sm-4 rounded text fw-bold ">
+                        <div class="col-md-3 col-sm-4 rounded text fw-bold ">
                             <label for="to" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">To:</label>
                         </div>
 
@@ -77,7 +82,7 @@
 
                     <!-- Departure -->
                     <div class="row">
-                        <div class="col-md-4 col-sm-4 rounded text fw-bold ">
+                        <div class="col-md-3 col-sm-4 rounded text fw-bold ">
                             <label for="departure" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Departure:</label>
                         </div>
 
@@ -90,7 +95,7 @@
 
                     <!-- Arrival-->
                     <div class="row">
-                        <div class="col-md-4 col-sm-4 rounded text fw-bold ">
+                        <div class="col-md-3 col-sm-4 rounded text fw-bold ">
                             <label for="arrival" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Arrival:</label>
                         </div>
 
@@ -104,13 +109,14 @@
                     <!-- Select Seats -->
                     <form action="<?php echo htmlspecialchars(BASE_URL . 'flight/book/' . $data['flight']['id']) ?>"
                           method="post" class="row">
-                        <div class="col-md-4 col-sm-4 rounded text fw-bold ">
+                        <div class="col-md-3 col-sm-4 rounded text fw-bold ">
                             <label for="selectSeats" class="col-md-8  col-sm-8 me-1 rounded-2 col-form-label">Select Seats</label>
                         </div>
 
                         <div class="col-md-7 col-sm-7 rounded mt-2">
                             <fieldset>
                                 <p class="fw-bold">Economy</p>
+                                <div class="seat-grid">
                                 <?php foreach ($data["seats"] as $seat) { ?>
                                     <?php if ($seat["class"] == "ECONOMY") { ?>
                                         <div class="form-check form-check-inline" style="width:10px; margin-right:30px">
@@ -129,10 +135,12 @@
                                         </div>
                                     <?php } ?>
                                 <?php } ?>
+                                </div>
                             </fieldset>
 
                             <fieldset>
                                 <p class="fw-bold mt-2">Business</p>
+                                <div class="seat-grid">
                                 <?php foreach ($data["seats"] as $seat) { ?>
                                     <?php if ($seat["class"] == "BUSINESS") { ?>
                                         <div class="form-check form-check-inline" style="width:10px; margin-right:30px">
@@ -150,6 +158,7 @@
                                         </div>
                                     <?php } ?>
                                 <?php } ?>
+                                </div>
                             </fieldset>
                         </div>
 
