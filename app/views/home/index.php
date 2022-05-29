@@ -36,14 +36,14 @@ showNavbar($data, isset($data["user"]));
 
     <div class="card col-sm-9 mx-auto mt-5">
         <div class="card-header text-white bg-primary">
-            <?php if (isset($data["user"]) && in_array($data["user"]["userType"], ["MANAGER", "EMPLOYEE"], true)) { ?>
+            <?php if (isset($data["user"]) && $data["user"]["userType"] == "CUSTOMER") { ?>
+                Booked flights
+            <?php } else { ?>
                 Upcoming flights
                 <a class="btn btn-info text-white float-end"
                    href="<?php echo htmlspecialchars(BASE_URL . 'flight/index') ?>">
                     View all
                 </a>
-            <?php } else { ?>
-                Booked flights
             <?php } ?>
         </div>
         <div class="card-body">
@@ -125,7 +125,7 @@ showNavbar($data, isset($data["user"]));
                                 <?php if (isset($data["user"]) && in_array($data["user"]["userType"], ["MANAGER", "EMPLOYEE"], true)) { ?>
                                     <td>
                                         <a class="btn btn-warning"
-                                           href="<?php echo htmlspecialchars(BASE_URL . 'flight/edit/' . $flight['id']) ?>">
+                                           href="<?php echo htmlspecialchars(BASE_URL . 'flight/index/' . $flight['id']) ?>">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
                                     </td>

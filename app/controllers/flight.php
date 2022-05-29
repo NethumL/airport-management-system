@@ -170,7 +170,7 @@ class flight extends Controller
             if ($result) {
                 $planeWidth = (int)$_ENV["PLANE_WIDTH"];
                 $planeLength = (int)$_ENV["PLANE_LENGTH"];
-                for ($x = 96; $x <= 95 + $planeWidth; $x++) {
+                for ($x = 65; $x <= 64 + $planeWidth; $x++) {
                     for ($y = 1; $y <= $planeLength; $y++) {
                         SeatManager::addSeat(chr($x), $y, $result, $y <= $planeLength / 2 ? "ECONOMY" : "BUSINESS");
                     }
@@ -290,7 +290,7 @@ class flight extends Controller
             $data["amount"] = $amount;
 
             $this->showView("flight/pay", $data);
-        } else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
+        } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $paymentDetails = filterArrayByKeys($_POST, self::PAYMENT_FIELDS);
 
             $undefinedFields = getUnsetKeys($paymentDetails, self::PAYMENT_FIELDS);

@@ -75,8 +75,8 @@ showNavbar($data);
                 </td>
                 <td><?php echo htmlspecialchars($data["flight"]["departureDateTime"]) ?></td>
                 <td><?php echo htmlspecialchars($data["flight"]["arrivalDateTime"]) ?></td>
-                <td>Rs. <?php echo htmlspecialchars($data["flight"]["economyClassPrice"]) ?></td>
-                <td>Rs. <?php echo htmlspecialchars($data["flight"]["businessClassPrice"]) ?></td>
+                <td><?php echo htmlspecialchars($data["flight"]["economyClassPrice"]) ?></td>
+                <td><?php echo htmlspecialchars($data["flight"]["businessClassPrice"]) ?></td>
                 <td><?php echo htmlspecialchars($data["flight"]["status"]) ?></td>
                 <td>
                     <a class="btn btn-info" href="<?php echo htmlspecialchars(BASE_URL . 'flight/view/' . $data['flight']['id']) ?>">
