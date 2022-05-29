@@ -13,15 +13,13 @@ class flight extends Controller
         "airline",
         "begin",
         "end",
-        "departureDate",
-        "departureTime",
-        "arrivalDate",
-        "arrivalTime",
+        "departureDateTime",
+        "arrivalDateTime",
         "economyClassPrice",
         "businessClassPrice",
         "status"
     ];
-    const PAYMENT_FIELDS = ["creditCardNumber", "paidAmount"];
+    const PAYMENT_FIELDS = ["creditCardNumber"];
 
     public function index(string $id = "")
     {
@@ -61,9 +59,6 @@ class flight extends Controller
                 http_response_code(400);
                 die;
             }
-
-            $flightDetails["departureDateTime"] = mergeDateTime($flightDetails["departureDate"], $flightDetails["departureTime"]);
-            $flightDetails["arrivalDateTime"] = mergeDateTime($flightDetails["arrivalDate"], $flightDetails["arrivalTime"]);
 
             $result = FlightManager::editFlight(
                 $id,
@@ -150,7 +145,9 @@ class flight extends Controller
 
             $flightDetails = filterArrayByKeys($_POST, self::FIELDS);
 
-            $undefinedFields = getUnsetKeys($flightDetails, self::FIELDS);
+            $undefinedFields = getUnsetKeys($flightDetails, array_filter(self::FIELDS, function ($field) {
+                return $field != "status";
+            }));
 
             if (!empty($undefinedFields)) {
                 create_flash_message("flight/new", "All fields are required.", FLASH_ERROR);
@@ -162,9 +159,6 @@ class flight extends Controller
                 redirectRelative("flight/new");
             }
 
-            $flightDetails["departureDateTime"] = mergeDateTime($flightDetails["departureDate"], $flightDetails["departureTime"]);
-            $flightDetails["arrivalDateTime"] = mergeDateTime($flightDetails["arrivalDate"], $flightDetails["arrivalTime"]);
-
             $result = FlightManager::addFlight(
                 $flightDetails["airline"],
                 $flightDetails["begin"],
@@ -173,7 +167,7 @@ class flight extends Controller
                 $flightDetails["arrivalDateTime"],
                 $flightDetails["economyClassPrice"],
                 $flightDetails["businessClassPrice"],
-                $flightDetails["status"]
+                "SCHEDULED"
             );
             if ($result) {
                 create_flash_message("flight/new", "Flight added successfully.", FLASH_SUCCESS);
