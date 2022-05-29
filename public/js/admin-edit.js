@@ -132,14 +132,7 @@ updateForm?.addEventListener("submit", e => {
     if (!user)
         return;
 
-    if (user.email === updateFormFields[0].value
-        && user.name === updateFormFields[2].value
-        && user.end === updateFormFields[3].value
-        && user.departureDateTime === updateFormFields[4].value
-        && user.arrivalDateTime === updateFormFields[5].value
-        && user.economyClassPrice === updateFormFields[6].value
-        && user.businessClassPrice === updateFormFields[7].value
-        && user.status === updateFormFields[1].value) {
+    if (user.name === updateFormFields[1].value) {
         return;
     }
 
