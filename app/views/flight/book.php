@@ -36,7 +36,7 @@
 
     <main style="margin-top: 150px">
         <div class="d-flex justify-content-center" style="margin-top: 63px;">
-            <div class="card col-md-7 col-sm-7 mx-auto mb-5">
+            <div class="card col-xl-7 col-sm-12 mx-auto mb-5">
                 <div class="card-header text-white bg-primary">
                     Book
                 </div>
