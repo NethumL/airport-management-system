@@ -7,6 +7,10 @@
     <?php include __DIR__ . "/../templates/head.php" ?>
     <title>Edit Account Details</title>
     <style>
+        .body{
+            background-color: red;
+        }
+
         .login-form form {
             margin-top: 20px;
         }
@@ -34,7 +38,7 @@
 
         .btn-primary {
             width: 80%;
-            background-color: #337AB7;
+            background-color:  rgba(93,184,92,255);
         }
     </style>
 </head>
@@ -58,23 +62,11 @@
                         <!-- email -->
                         <div class="row">
                             <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Email</label>
+                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Email :</label>
                             </div>
 
                             <div class="col-md-6 col-sm-6 rounded">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Email</label>
-                            </div>
-                            <div class="col-md-3 col-sm-3"></div>
-                        </div>
-
-                        <!-- Name -->
-                        <div class="row">
-                            <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="name" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Name</label>
-                            </div>
-
-                            <div class="col-md-6 col-sm-6 rounded">
-                                <input type="text" class="form-control" name="name" id="name" required="required">
+                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label"><?php echo $_SESSION['user']['email'] ?></label>
                             </div>
                             <div class="col-md-3 col-sm-3"></div>
                         </div>
@@ -82,11 +74,24 @@
                         <!-- user Type -->
                         <div class="row">
                             <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">User Type</label>
+                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">User Type :</label>
                             </div>
 
                             <div class="col-md-6 col-sm-6 rounded">
-                                <input type="text" class="form-control" name="email" id="email" required="required">
+                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label"><?php echo $_SESSION['user']['userType'] ?></label>
+                            </div>
+                            <div class="col-md-3 col-sm-3"></div>
+                        </div>
+
+
+                        <!-- Name -->
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 rounded text">
+                                <label for="name" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Name :</label>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 rounded">
+                                <input type="text" class="form-control" name="name" id="name" required="required">
                             </div>
                             <div class="col-md-3 col-sm-3"></div>
                         </div>
@@ -98,7 +103,7 @@
                             </div>
 
                             <div class="col-md-6 col-sm-6 rounded">
-                                <input type="text" class="form-control" name="password" id="password" required="required">
+                                <input type="password" class="form-control" name="password" id="password" required="required">
                             </div>
                             <div class="col-md-3 col-sm-3"></div>
                         </div>
