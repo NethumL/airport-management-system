@@ -7,10 +7,6 @@
     <?php include __DIR__ . "/../templates/head.php" ?>
     <title>Edit Account Details</title>
     <style>
-        .body{
-            background-color: red;
-        }
-
         .login-form form {
             margin-top: 20px;
         }
@@ -20,15 +16,10 @@
         }
 
         .card-body {
-            background-color: white;
             border-style: solid;
             border-width: 2px;
             border-color: rgba(51, 121, 183, 255);
             font-size: 95%;
-        }
-
-        .card-header {
-            background-color: #337AB7;
         }
 
         .row {
@@ -36,9 +27,8 @@
             padding-bottom: 2%;
         }
 
-        .btn-primary {
+        #save-button {
             width: 80%;
-            background-color:  rgba(93,184,92,255);
         }
     </style>
 </head>
@@ -51,7 +41,7 @@
     <main style="margin-top: 10%;">
         <div class="login-form d-flex justify-content-center">
             <div class="card col-sm-5 mx-auto">
-                <div class="card-header text-white">
+                <div class="card-header text-white bg-primary">
                     Edit Account Details
                 </div>
 
@@ -112,9 +102,8 @@
                         <div class="row">
                             <div class="col-md-9 col-sm-9"></div>
                             <div class="col-md-3 col-sm-3">
-                                <button type="submit" class="btn btn-primary fw-bold">Save</button>
+                                <button type="submit" class="btn btn-success fw-bold" id="save-button">Save</button>
                             </div>
-
                         </div>
                     </form>
                 </div>

@@ -17,15 +17,10 @@
         }
 
         .card-body {
-            background-color: white;
             border-style: solid;
             border-width: 2px;
             border-color: rgba(51, 121, 183, 255);
             font-size: 95%;
-        }
-
-        .card-header {
-            background-color: #337AB7;
         }
 
         .row {
@@ -35,7 +30,6 @@
 
         .btn-success {
             width: 80%;
-            background-color:  rgba(93,184,92,255);
         }
     </style>
 </head>
