@@ -60,11 +60,11 @@
                         <!-- email -->
                         <div class="row">
                             <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Email</label>
+                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Email :</label>
                             </div>
 
                             <div class="col-md-6 col-sm-6 rounded">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Email is shown here</label>
+                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label"><?php echo $_SESSION['user']['email'] ?></label>
                             </div>
                             <div class="col-md-3 col-sm-3"></div>
                         </div>
@@ -72,11 +72,11 @@
                         <!-- Name -->
                         <div class="row">
                             <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="name" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Name</label>
+                                <label for="name" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Name :</label>
                             </div>
 
                             <div class="col-md-6 col-sm-6 rounded">
-                                <label for="name" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Name is hsown here</label>
+                                <label for="name" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label"><?php echo $_SESSION['user']['name'] ?></label>
                             </div>
                             <div class="col-md-3 col-sm-3"></div>
                         </div>
@@ -84,11 +84,11 @@
                         <!-- user Type -->
                         <div class="row">
                             <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">User Type</label>
+                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">User Type :</label>
                             </div>
 
                             <div class="col-md-6 col-sm-6 rounded">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">User Type shown here</label>
+                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label"><?php echo $_SESSION['user']['userType'] ?></label>
                             </div>
                             <div class="col-md-3 col-sm-3"></div>
                         </div>
@@ -96,20 +96,20 @@
                         <!-- password -->
                         <div class="row">
                             <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="password" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Password</label>
+                                <label for="password" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Password :</label>
                             </div>
 
                             <div class="col-md-6 col-sm-6 rounded">
-                                <label for="password" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Password shown here</label>
+                                <label for="password" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Password Here??</label>
                             </div>
                             <div class="col-md-3 col-sm-3"></div>
                         </div>
 
-                        <!-- send button -->
+                        <!-- edit button -->
                         <div class="row">
                             <div class="col-md-9 col-sm-9"></div>
                             <div class="col-md-3 col-sm-3">
-                                <button type="submit" class="btn btn-primary fw-bold">Edit</button>
+                                <a class="btn btn-primary fw-bold" href="<?php echo htmlspecialchars(BASE_URL . 'account/edit') ?>">Edit</a>
                             </div>
 
                         </div>
