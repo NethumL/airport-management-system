@@ -11,6 +11,10 @@
             text-align: right;
         }
 
+        .card-header{ 
+            background-color: #337AB7;
+        }
+
         .row {
             padding-top: 3%;
             padding-bottom: 2%;
@@ -18,6 +22,14 @@
 
         .btn {
             width: 100%;
+        }
+
+        .btn-primary{
+            background-color: #337AB7;
+        }
+
+        .btn-success{
+            background-color:  rgba(93,184,92,255);
         }
 
         .card-body {
@@ -40,7 +52,7 @@
 
 
             <div class="card col-sm-5 mx-auto ">
-                <div class="card-header text-white bg-primary">
+                <div class="card-header text-white">
                     Log In
                 </div>
                 <div class="card-body mb-2 fw-bold">
