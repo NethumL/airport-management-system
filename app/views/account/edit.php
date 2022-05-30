@@ -38,69 +38,62 @@
     showNavbar($data);
     ?>
 
-    <main style="margin-top: 10%;">
+    <main style="margin-top: 10rem;">
         <div class="login-form d-flex justify-content-center">
-            <div class="card col-sm-5 mx-auto">
+            <div class="card col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
                 <div class="card-header text-white bg-primary">
                     Edit Account Details
                 </div>
 
                 <div class="card-body mb-2 fw-bold">
-                    <form action="forgot_password" method="post">
-
-
+                    <form action="<?php echo htmlspecialchars(BASE_URL . 'account/edit') ?>" method="post">
                         <!-- email -->
                         <div class="row">
                             <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Email :</label>
+                                <label for="email" class="col-md-12 col-sm-12 me-1 rounded-2 col-form-label">Email :</label>
                             </div>
 
-                            <div class="col-md-6 col-sm-6 rounded">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label"><?php echo $_SESSION['user']['email'] ?></label>
+                            <div class="col-md-9 col-sm-9 rounded">
+                                <label for="email" class="col-md-12 col-sm-12 me-1 rounded-2 col-form-label">
+                                    <?php echo htmlspecialchars($_SESSION['user']['email']) ?>
+                                </label>
                             </div>
-                            <div class="col-md-3 col-sm-3"></div>
                         </div>
 
                         <!-- user Type -->
                         <div class="row">
                             <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">User Type :</label>
+                                <label for="email" class="col-md-12 col-sm-12 me-1 rounded-2 col-form-label">User Type :</label>
                             </div>
 
-                            <div class="col-md-6 col-sm-6 rounded">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label"><?php echo $_SESSION['user']['userType'] ?></label>
+                            <div class="col-md-9 col-sm-9 rounded">
+                                <label for="email" class="col-md-12 col-sm-12 me-1 rounded-2 col-form-label">
+                                    <?php echo htmlspecialchars($_SESSION['user']['userType']) ?>
+                                </label>
                             </div>
-                            <div class="col-md-3 col-sm-3"></div>
                         </div>
 
 
                         <!-- Name -->
                         <div class="row">
                             <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="name" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Name :</label>
+                                <label for="name" class="col-md-12 col-sm-12 me-1 rounded-2 col-form-label">Name :</label>
                             </div>
 
-                            <div class="col-md-6 col-sm-6 rounded">
-                                <input type="text" class="form-control" name="name" id="name" required="required">
+                            <div class="col-md-9 col-sm-9 rounded">
+                                <input type="text" class="form-control" name="name" id="name" required="required"
+                                       value="<?php echo htmlspecialchars($_SESSION['user']['name']) ?>">
                             </div>
-                            <div class="col-md-3 col-sm-3"></div>
-                        </div>
-
-                        <!-- password -->
-                        <div class="row">
-                            <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="password" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Password</label>
-                            </div>
-
-                            <div class="col-md-6 col-sm-6 rounded">
-                                <input type="password" class="form-control" name="password" id="password" required="required">
-                            </div>
-                            <div class="col-md-3 col-sm-3"></div>
                         </div>
 
                         <!-- send button -->
-                        <div class="row">
-                            <div class="col-md-9 col-sm-9"></div>
+                        <div class="row mt-3">
+                            <div class="col-md-8 offset-md-1 col-sm-8 offset-sm-1">
+                                <a class="btn btn-warning fw-bold"
+                                   href="<?php echo htmlspecialchars(BASE_URL . 'auth/forgot-password') ?>">
+                                    Forgot password
+                                </a>
+                            </div>
                             <div class="col-md-3 col-sm-3">
                                 <button type="submit" class="btn btn-success fw-bold" id="save-button">Save</button>
                             </div>

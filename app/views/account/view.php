@@ -40,74 +40,67 @@
     showNavbar($data);
     ?>
 
-    <main style="margin-top: 10%;">
+    <main style="margin-top: 10rem;">
         <div class="login-form d-flex justify-content-center">
-            <div class="card col-sm-5 mx-auto">
-                <div class="card-header text-white">
+            <div class="card col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
+                <div class="card-header text-white bg-primary">
                     View Account Details
                 </div>
 
                 <div class="card-body mb-2 fw-bold">
-                    <form action="forgot_password" method="post">
-
-
-                        <!-- email -->
-                        <div class="row">
-                            <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Email :</label>
-                            </div>
-
-                            <div class="col-md-6 col-sm-6 rounded">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label"><?php echo $_SESSION['user']['email'] ?></label>
-                            </div>
-                            <div class="col-md-3 col-sm-3"></div>
+                    <!-- email -->
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 rounded text">
+                            <label for="email" class="col-md-12 col-sm-12 me-1 rounded-2 col-form-label">Email :</label>
                         </div>
 
-                        <!-- Name -->
-                        <div class="row">
-                            <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="name" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Name :</label>
-                            </div>
+                        <div class="col-md-9 col-sm-9 rounded">
+                            <label for="email" class="col-md-12 col-sm-12 me-1 rounded-2 col-form-label">
+                                <?php echo htmlspecialchars($_SESSION['user']['email']) ?>
+                            </label>
+                        </div>
+                    </div>
 
-                            <div class="col-md-6 col-sm-6 rounded">
-                                <label for="name" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label"><?php echo $_SESSION['user']['name'] ?></label>
-                            </div>
-                            <div class="col-md-3 col-sm-3"></div>
+                    <!-- Name -->
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 rounded text">
+                            <label for="name" class="col-md-12 col-sm-12 me-1 rounded-2 col-form-label">Name :</label>
                         </div>
 
-                        <!-- user Type -->
-                        <div class="row">
-                            <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">User Type :</label>
-                            </div>
+                        <div class="col-md-9 col-sm-9 rounded">
+                            <label for="name" class="col-md-12 col-sm-12 me-1 rounded-2 col-form-label">
+                                <?php echo htmlspecialchars($_SESSION['user']['name']) ?>
+                            </label>
+                        </div>
+                    </div>
 
-                            <div class="col-md-6 col-sm-6 rounded">
-                                <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label"><?php echo $_SESSION['user']['userType'] ?></label>
-                            </div>
-                            <div class="col-md-3 col-sm-3"></div>
+                    <!-- user Type -->
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 rounded text">
+                            <label for="email" class="col-md-12 col-sm-5 me-1 rounded-2 col-form-label">User Type :</label>
                         </div>
 
-                        <!-- password -->
-                        <div class="row">
-                            <div class="col-md-3 col-sm-3 rounded text">
-                                <label for="password" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Password :</label>
-                            </div>
-
-                            <div class="col-md-6 col-sm-6 rounded">
-                                <label for="password" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Password Here??</label>
-                            </div>
-                            <div class="col-md-3 col-sm-3"></div>
+                        <div class="col-md-9 col-sm-9 rounded">
+                            <label for="email" class="col-md-12 col-sm-5 me-1 rounded-2 col-form-label">
+                                <?php echo htmlspecialchars($_SESSION['user']['userType']) ?>
+                            </label>
                         </div>
+                    </div>
 
-                        <!-- edit button -->
-                        <div class="row">
-                            <div class="col-md-9 col-sm-9"></div>
-                            <div class="col-md-3 col-sm-3">
-                                <a class="btn btn-success fw-bold" href="<?php echo htmlspecialchars(BASE_URL . 'account/edit') ?>">Edit</a>
-                            </div>
-
+                    <!-- edit button -->
+                    <div class="row mt-3">
+                        <div class="col-md-8 offset-md-1 col-sm-8 offset-sm-1">
+                            <a class="btn btn-warning fw-bold"
+                               href="<?php echo htmlspecialchars(BASE_URL . 'auth/forgot-password') ?>">
+                                Forgot password
+                            </a>
                         </div>
-                    </form>
+                        <div class="col-md-3 col-sm-3">
+                            <a class="btn btn-success fw-bold"
+                               href="<?php echo htmlspecialchars(BASE_URL . 'account/edit') ?>">Edit</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
