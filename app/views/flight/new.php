@@ -7,10 +7,6 @@
     <title>Add Flight</title>
     <?php include __DIR__ . "/../templates/head.php" ?>
     <style>
-        .text {
-            text-align: right;
-        }
-
         .row {
             padding-top: 2%;
             padding-bottom: 2%;
@@ -49,7 +45,7 @@
                     <form action="<?php echo htmlspecialchars(BASE_URL . 'flight/new') ?>" method="post">
                         <!-- Airline -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="airline" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Airline</label>
                             </div>
 
@@ -65,7 +61,7 @@
 
                         <!-- From -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="begin" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">From</label>
                             </div>
 
@@ -83,7 +79,7 @@
 
                          <!-- To -->
                          <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="end" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">To</label>
                             </div>
 
@@ -100,7 +96,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="departureDateTime" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Departure</label>
                             </div>
 
@@ -110,7 +106,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="arrivalDateTime" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Arrival</label>
                             </div>
 
@@ -120,7 +116,7 @@
                         </div>
                         <!-- economyClassPrice -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="economyClassPrice" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Economy Class Price</label>
                             </div>
 
@@ -131,7 +127,7 @@
 
                          <!-- businessClassPrice-->
                          <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="businessClassPrice" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Business Class Price</label>
                             </div>
 

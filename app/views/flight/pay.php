@@ -7,14 +7,10 @@
     <title>Payment</title>
     <?php include __DIR__ . "/../templates/head.php" ?>
     <style>
-        .text {
-            text-align: right;
-        }
-
-
         .btn {
             width: 100%;
         }
+
         .card-body {
             border-style: solid;
             border-width: 2px;
@@ -45,7 +41,7 @@
                     <form action="<?php echo htmlspecialchars(BASE_URL . 'flight/pay/' . $data['booking']['id']) ?>" method="post">
                         <!-- email -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label fw-bold ">Email</label>
                             </div>
 
@@ -59,7 +55,7 @@
 
                         <!-- Name -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="name" class="col-md-8 col-sm-5 me-1 rounded-2 col-form-label fw-bold">Name</label>
                             </div>
 
@@ -73,7 +69,7 @@
 
                          <!-- Airline --> 
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="airline" class="col-md-8 col-sm-5 rounded-2 col-form-label fw-bold">Airline</label>
                             </div>
 
@@ -87,7 +83,7 @@
 
                         <!-- Seat -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="seatNumbers" class="col-md-8 col-sm-5 me-1 rounded-2 col-form-label fw-bold">Seat Numbers</label>
                             </div>
 
@@ -106,7 +102,7 @@
 
                         <!-- Payment Amount -->
                         <div class="row mb-3">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="payment" class="col-md-8 col-sm-5 me-1 rounded-2 col-form-label fw-bold">Payment Amount</label>
                             </div>
 
@@ -123,7 +119,7 @@
 
                          <!-- Card holder name-->
                          <div class="row mb-5">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="cardName" class="col-md-8 col-sm-5 me-1 rounded-2 col-form-label fw-bold">Card Holder Name</label>
                             </div>
 
@@ -134,7 +130,7 @@
                         </div>
                          <!-- Card number-->
                          <div class="row mb-5">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="creditCardNumber" class="col-md-8 col-sm-5 me-1 rounded-2 col-form-label fw-bold">
                                     Card Number
                                 </label>
@@ -147,7 +143,7 @@
 
                         <!-- Expiry Date-->
                         <div class="row mb-5">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="expiryDate" class="col-md-8 col-sm-5 me-1 rounded-2 col-form-label fw-bold">Expiry Date</label>
                             </div>
 
@@ -159,7 +155,7 @@
 
                         <!-- CVV -->
                         <div class="row mb-5">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="cvv" class="col-md-8 col-sm-5 me-1 rounded-2 col-form-label fw-bold">CVV</label>
                             </div>
 

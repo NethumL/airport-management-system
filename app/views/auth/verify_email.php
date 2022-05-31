@@ -11,20 +11,10 @@
             margin-top: 20px;
         }
 
-        .text {
-            text-align: right;
-        }
-
         .card-body {
-            background-color: white;
             border-style: solid;
             border-width: 2px;
-            border-color: rgba(51, 121, 183, 255);
             font-size: 95%;
-        }
-
-        .card-header {
-            background-color: #337AB7;
         }
 
         .row {
@@ -34,7 +24,6 @@
 
         .btn-primary {
             width: 100%;
-            background-color: #337AB7;
         }
     </style>
 </head>
@@ -48,11 +37,11 @@
     <main style="margin-top: 10%;">
         <div class="login-form d-flex justify-content-center">
             <div class="card col-sm-5 mx-auto">
-                <div class="card-header text-white">
+                <div class="card-header text-white bg-primary">
                     Email Verified
                 </div>
 
-                <div class="card-body mb-2 fw-bold">
+                <div class="card-body mb-2 fw-bold border-primary">
                     <form action="forgot_password" method="post">
 
                         <!-- email address label and input -->

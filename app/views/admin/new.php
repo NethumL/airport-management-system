@@ -7,15 +7,6 @@
     <title>Add</title>
     <?php include __DIR__ . "/../templates/head.php" ?>
     <style>
-        .login-form form {
-            background: white;
-
-        }
-
-        .text {
-            text-align: right;
-        }
-
         .row {
             padding-top: 2%;
             padding-bottom: 2%;
@@ -45,7 +36,7 @@
                 <?php display_flash_message("admin/new"); ?>
             </div>
         </div>
-        <div class="login-form d-flex justify-content-center" style="margin-top: 30px;">
+        <div class="d-flex justify-content-center" style="margin-top: 30px;">
             <div class="card col-sm-5 mx-auto ">
                 <div class="card-header text-white bg-primary">
                     Add Employee
@@ -54,7 +45,7 @@
                     <form action="new" method="post">
                         <!-- email -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Email</label>
                             </div>
 
@@ -66,7 +57,7 @@
 
                         <!-- name -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="name" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Name</label>
                             </div>
 
@@ -77,7 +68,7 @@
                         </div>
                          <!-- userType-->
                          <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="userType" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">User Type</label>
                             </div>
 
@@ -89,7 +80,7 @@
 
                         <!-- password -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="password" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Password</label>
                             </div>
 

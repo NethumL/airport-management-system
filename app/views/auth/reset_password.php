@@ -11,20 +11,10 @@
             margin-top: 20px;
         }
 
-        .text {
-            text-align: center;
-        }
-
         .card-body {
-            background-color: white;
             border-style: solid;
             border-width: 2px;
-            border-color: rgba(51, 121, 183, 255);
             font-size: 95%;
-        }
-
-        .card-header {
-            background-color: #337AB7;
         }
 
         .row {
@@ -47,22 +37,22 @@
     <main style="margin-top: 10%;">
         <div class="login-form d-flex justify-content-center">
             <div class="card col-sm-5 mx-auto">
-                <div class="card-header text-white">
+                <div class="card-header text-white bg-primary">
                     Reset Password
                 </div>
 
-                <div class="card-body mb-2 fw-bold">
+                <div class="card-body mb-2 fw-bold border-primary">
                     <form action="<?php echo htmlspecialchars(BASE_URL . 'auth/reset-password/' . $data['token']) ?>" method="post">
 
                         <div class="row">
-                            <div class="col-md-9 col-sm-3 rounded text">
+                            <div class="col-md-9 col-sm-3 rounded text-center">
                                 <p>Enter your new password to reset your account!!</p>
                             </div>
                         </div>
 
                         <!-- password -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-center">
                                 <label for="password" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Password</label>
                             </div>
 
@@ -75,7 +65,7 @@
 
                         <!-- confirm password -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-center">
                                 <label for="confirm_password" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Confirm Password</label>
                             </div>
 

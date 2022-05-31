@@ -8,12 +8,7 @@
     <?php include __DIR__ . "/../templates/head.php" ?>
     <title>View Flight Details</title>
     <style>
-        .text {
-            text-align: right;
-        }
-
         .card-body {
-            background-color: white;
             border-style: solid;
             border-width: 2px;
             font-size: 95%;
@@ -46,7 +41,7 @@ showNavbar($data);
             <div class="card-body border-primary mb-2">
                 <!-- Airline -->
                 <div class="row">
-                    <div class="col-md-4 col-sm-4 rounded text">
+                    <div class="col-md-4 col-sm-4 rounded text-end">
                         <label for="airline"
                                class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label fw-bold">Airline:</label>
                     </div>
@@ -61,7 +56,7 @@ showNavbar($data);
 
                 <!-- From -->
                 <div class="row">
-                    <div class="col-md-4 col-sm-4 rounded text">
+                    <div class="col-md-4 col-sm-4 rounded text-end">
                         <label for="from" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label fw-bold">From:</label>
                     </div>
 
@@ -75,7 +70,7 @@ showNavbar($data);
 
                 <!-- To -->
                 <div class="row">
-                    <div class="col-md-4 col-sm-4 rounded text">
+                    <div class="col-md-4 col-sm-4 rounded text-end">
                         <label for="to" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label fw-bold">To:</label>
                     </div>
 
@@ -89,7 +84,7 @@ showNavbar($data);
 
                 <!-- Departure -->
                 <div class="row">
-                    <div class="col-md-4 col-sm-4 rounded text">
+                    <div class="col-md-4 col-sm-4 rounded text-end">
                         <label for="departure" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label fw-bold">Departure:</label>
                     </div>
 
@@ -103,7 +98,7 @@ showNavbar($data);
 
                 <!-- Arrival-->
                 <div class="row">
-                    <div class="col-md-4 col-sm-4 rounded text">
+                    <div class="col-md-4 col-sm-4 rounded text-end">
                         <label for="arrival"
                                class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label fw-bold">Arrival:</label>
                     </div>
@@ -118,7 +113,7 @@ showNavbar($data);
 
                 <!-- Economy Class -->
                 <div class="row">
-                    <div class="col-md-4 col-sm-4 rounded text">
+                    <div class="col-md-4 col-sm-4 rounded text-end">
                         <label for="economyClassPrice" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label fw-bold">Economy
                             Class Price:</label>
                     </div>
@@ -133,7 +128,7 @@ showNavbar($data);
 
                 <!-- Business Class -->
                 <div class="row">
-                    <div class="col-md-4 col-sm-4 rounded text">
+                    <div class="col-md-4 col-sm-4 rounded text-end">
                         <label for="businessClassPrice"
                                class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label fw-bold">Business Class
                             Price:</label>

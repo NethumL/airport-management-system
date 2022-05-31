@@ -7,14 +7,6 @@
     <title>Login</title>
     <?php include __DIR__ . "/../templates/head.php" ?>
     <style>
-        .text {
-            text-align: right;
-        }
-
-        .card-header{ 
-            background-color: #337AB7;
-        }
-
         .row {
             padding-top: 3%;
             padding-bottom: 2%;
@@ -24,18 +16,9 @@
             width: 100%;
         }
 
-        .btn-primary{
-            background-color: #337AB7;
-        }
-
-        .btn-success{
-            background-color:  rgba(93,184,92,255);
-        }
-
         .card-body {
             border-style: solid;
             border-width: 2px;
-            border-color: rgba(51, 121, 183, 255);
             font-size: 95%;
         }
     </style>
@@ -52,10 +35,10 @@
 
 
             <div class="card col-sm-5 mx-auto ">
-                <div class="card-header text-white">
+                <div class="card-header text-white bg-primary">
                     Log In
                 </div>
-                <div class="card-body mb-2 fw-bold">
+                <div class="card-body mb-2 fw-bold border-primary">
                     <form action="login" method="post">
 
                         <!-- error message -->
@@ -63,7 +46,7 @@
 
                         <!-- email -->
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 rounded text">
+                            <div class="col-md-3 col-sm-3 rounded text-end">
                                 <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Email</label>
                             </div>
 
@@ -76,7 +59,7 @@
                         <!-- password -->
                         <div class="row">
 
-                            <div class="col-md-3 col-sm-3 rounded text">
+                            <div class="col-md-3 col-sm-3 rounded text-end">
                                 <label for="password" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Password</label>
                             </div>
 

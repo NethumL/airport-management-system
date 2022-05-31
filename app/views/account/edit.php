@@ -7,18 +7,9 @@
     <?php include __DIR__ . "/../templates/head.php" ?>
     <title>Edit Account Details</title>
     <style>
-        .login-form form {
-            margin-top: 20px;
-        }
-
-        .text {
-            text-align: right;
-        }
-
         .card-body {
             border-style: solid;
             border-width: 2px;
-            border-color: rgba(51, 121, 183, 255);
             font-size: 95%;
         }
 
@@ -39,17 +30,17 @@
     ?>
 
     <main style="margin-top: 10rem;">
-        <div class="login-form d-flex justify-content-center">
+        <div class="d-flex justify-content-center">
             <div class="card col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto">
                 <div class="card-header text-white bg-primary">
                     Edit Account Details
                 </div>
 
-                <div class="card-body mb-2 fw-bold">
+                <div class="card-body mb-2 fw-bold border-primary">
                     <form action="<?php echo htmlspecialchars(BASE_URL . 'account/edit') ?>" method="post">
                         <!-- email -->
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 rounded text">
+                            <div class="col-md-3 col-sm-3 rounded text-end">
                                 <label for="email" class="col-md-12 col-sm-12 me-1 rounded-2 col-form-label">Email :</label>
                             </div>
 
@@ -62,7 +53,7 @@
 
                         <!-- user Type -->
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 rounded text">
+                            <div class="col-md-3 col-sm-3 rounded text-end">
                                 <label for="email" class="col-md-12 col-sm-12 me-1 rounded-2 col-form-label">User Type :</label>
                             </div>
 
@@ -76,7 +67,7 @@
 
                         <!-- Name -->
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 rounded text">
+                            <div class="col-md-3 col-sm-3 rounded text-end">
                                 <label for="name" class="col-md-12 col-sm-12 me-1 rounded-2 col-form-label">Name :</label>
                             </div>
 

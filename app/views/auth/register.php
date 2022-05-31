@@ -7,16 +7,6 @@
     <title>Register</title>
     <?php include __DIR__ . "/../templates/head.php" ?>
     <style>
-        .login-form form {
-            background: white;
-            /* box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3); */
-            /* padding: 30px; */
-        }
-
-        .text {
-            text-align: right;
-        }
-
         .row {
             padding-top: 2%;
             padding-bottom: 2%;
@@ -26,18 +16,9 @@
             width: 100%;
         }
 
-        .btn-primary {
-            background-color: #337AB7;
-        }
-
-        .btn-success{
-            background-color:  rgba(93,184,92,255);
-        }
-
         .card-body {
             border-style: solid;
             border-width: 2px;
-            border-color: rgba(51, 121, 183, 255);
             font-size: 90%;
         }
     </style>
@@ -50,14 +31,14 @@
     ?>
 
     <main style="margin-top: 150px">
-        <div class="login-form d-flex justify-content-center" style="margin-top: 63px;">
+        <div class="d-flex justify-content-center" style="margin-top: 63px;">
 
 
             <div class="card col-sm-5 mx-auto ">
-                <div class="card-header text-white" style="background-color:#337AB7;">
+                <div class="card-header text-white bg-primary">
                     Register
                 </div>
-                <div class="card-body mb-2 fw-bold">
+                <div class="card-body mb-2 fw-bold border-primary">
                     <form action="register" method="post">
 
                         <!-- error message -->
@@ -65,7 +46,7 @@
 
                         <!-- email -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Email</label>
                             </div>
 
@@ -77,7 +58,7 @@
 
                         <!-- name -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="name" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Name</label>
                             </div>
 
@@ -89,7 +70,7 @@
 
                         <!-- password -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="password" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Password</label>
                             </div>
 
@@ -101,7 +82,7 @@
 
                         <!-- confirm password -->
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 rounded text">
+                            <div class="col-md-4 col-sm-4 rounded text-end">
                                 <label for="confirm_password" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Confirm Password</label>
                             </div>
 

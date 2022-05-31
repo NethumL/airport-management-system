@@ -7,24 +7,10 @@
     <?php include __DIR__ . "/../templates/head.php" ?>
     <title>Forgot Password</title>
     <style>
-        .login-form form {
-            margin-top: 20px;
-        }
-
-        .text {
-            text-align: right;
-        }
-
         .card-body {
-            background-color: white;
             border-style: solid;
             border-width: 2px;
-            border-color: rgba(51, 121, 183, 255);
             font-size: 95%;
-        }
-
-        .card-header {
-            background-color: #337AB7;
         }
 
         .row {
@@ -46,23 +32,23 @@
 
     <main style="margin-top: 10%;">
         <?php display_flash_message("auth/forgot-password"); ?>
-        <div class="login-form d-flex justify-content-center">
+        <div class="d-flex justify-content-center">
             <div class="card col-sm-5 mx-auto">
-                <div class="card-header text-white">
+                <div class="card-header text-white bg-primary">
                     Forgot Password
                 </div>
 
-                <div class="card-body mb-2 fw-bold">
+                <div class="card-body mb-2 fw-bold border-primary">
                     <form action="forgot_password" method="post">
 
                         <div class="row">
-                            <div class="col-md-9 col-sm-3 rounded text">
+                            <div class="col-md-9 col-sm-3 rounded text-end">
                                 <p>You can reset your password if you forget it.</p>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 col-sm-3 rounded text">
+                            <div class="col-md-3 col-sm-3 rounded text-end">
                                 <label for="email" class="col-md-8  col-sm-5 me-1 rounded-2 col-form-label">Email</label>
                             </div>
 
