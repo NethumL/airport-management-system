@@ -139,7 +139,7 @@ class airport extends Controller
             $name = $_GET["name"];
 
             $result = AirportManager::getAirportsBy($name);
-            if ($result) {
+            if ($result !== false) {
                 echo json_encode($result);
             } else {
                 http_response_code(500);

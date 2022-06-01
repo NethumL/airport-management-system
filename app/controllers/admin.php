@@ -185,7 +185,7 @@ class admin extends Controller {
                 $filterFields["name"],
                 "",
             );
-            if ($result) {
+            if ($result !== false) {
                 echo json_encode($result);
             } else {
                 http_response_code(500);

@@ -111,7 +111,7 @@ class flight extends Controller
                 $_GET["to"],
                 status: $_GET["status"]
             );
-            if ($result) {
+            if ($result !== false) {
                 echo json_encode($result);
             } else {
                 http_response_code(500);
