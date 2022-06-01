@@ -30,15 +30,37 @@ showNavbar($data);
     <div class="mb-5" style="margin-left: 5rem;">
         <form method="POST" id="filter-form">
             <div class="row">
-                <label for="filterFrom" class="col-md-1 offset-md-2 col-sm-5 rounded-2 col-form-label">From</label>
-                <div class="col-md-2 col-sm-6 rounded">
-                    <input type="text" class="form-control" name="from" id="filterFrom">
+                <div class="col-md-2 offset-md-2 col-sm-5">
+                    <div class="row">
+                        <label for="filterFrom" class="col-md-4 col-form-label">From</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="from" id="filterFrom">
+                        </div>
+                    </div>
                 </div>
-                <label for="filterTo" class="col-md-1 col-sm-5 rounded-2 col-form-label">To</label>
-                <div class="col-md-2 col-sm-6 rounded">
-                    <input type="text" class="form-control" name="to" id="filterTo">
+                <div class="col-md-2">
+                    <div class="row">
+                        <label for="filterTo" class="col-md-4 col-sm-5 col-form-label">To</label>
+                        <div class="col-md-8 col-sm-6">
+                            <input type="text" class="form-control" name="to" id="filterTo">
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2 offset-md-1">
+                <div class="col-md-2">
+                    <div class="row">
+                        <label for="filterStatus" class="col-md-4 col-form-label">Status</label>
+                        <div class="col-md-8">
+                            <select name="status" id="filterStatus" class="form-select">
+                                <option selected disabled value="">Select status</option>
+                                <option value="SCHEDULED">Scheduled</option>
+                                <option value="IN_PROGRESS">In progress</option>
+                                <option value="CANCELLED">Cancelled</option>
+                                <option value="ARRIVED">Arrived</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 text-center">
                     <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </div>

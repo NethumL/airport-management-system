@@ -2,7 +2,7 @@ const BASE_URL = document.head.querySelector("[name=BASE_URL][content]").content
 const alertContainer = document.getElementById("alert-container");
 
 const filterForm = document.getElementById("filter-form");
-const filterFormFields = filterForm.querySelectorAll("input");
+const filterFormFields = filterForm.querySelectorAll("input,select");
 
 let sortOrder = null;
 const table = document.getElementById("flight-table");

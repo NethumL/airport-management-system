@@ -108,7 +108,8 @@ class flight extends Controller
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $result = FlightManager::getFlightsBy(
                 $_GET["from"],
-                $_GET["to"]
+                $_GET["to"],
+                status: $_GET["status"]
             );
             if ($result) {
                 echo json_encode($result);
