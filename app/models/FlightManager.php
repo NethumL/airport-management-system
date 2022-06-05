@@ -4,14 +4,24 @@ require_once __DIR__ . '/AbstractManager.php';
 
 class FlightManager extends AbstractManager
 {
-    public static function addFlight($airline, $begin, $end, $departureDateTime, $arrivalDateTime, $economyClassPrice, $businessClassPrice, $status): int|bool
+    public static function addFlight($airline, $begin, $end, $departureDateTime, $arrivalDateTime, $economyClassPrice, $businessClassPrice, $status, $planeWidth, $planeLength): bool
     {
-        $stmt = self::$db->prepare("INSERT INTO flight(airline, begin, end, departureDateTime, arrivalDateTime, economyClassPrice, businessClassPrice, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
-        $result = $stmt->execute([$airline, $begin, $end, $departureDateTime, $arrivalDateTime, $economyClassPrice, $businessClassPrice, $status]);
-        if ($result) {
-            return self::$db->lastInsertId();
-        } else {
-            return $result;
+        try {
+            self::$db->beginTransaction();
+            $stmt = self::$db->prepare("INSERT INTO flight(airline, begin, end, departureDateTime, arrivalDateTime, economyClassPrice, businessClassPrice, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
+            $stmt->execute([$airline, $begin, $end, $departureDateTime, $arrivalDateTime, $economyClassPrice, $businessClassPrice, $status]);
+            $flightId = self::$db->lastInsertId();
+
+            $stmt = self::$db->prepare("INSERT INTO seat(xPosition, yPosition, isBooked, flightNumber, class) VALUES(?, ?, ?, ?, ?);");
+            for ($x = 65; $x <= 64 + $planeWidth; $x++) {
+                for ($y = 1; $y <= $planeLength; $y++) {
+                    $stmt->execute([chr($x), $y, 0, $flightId, $y <= $planeLength / 2 ? "ECONOMY" : "BUSINESS"]);
+                }
+            }
+            return self::$db->commit();
+        } catch (Exception $e) {
+            self::$db->rollBack();
+            throw $e;
         }
     }
 

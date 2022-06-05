@@ -157,6 +157,8 @@ class flight extends Controller
                 redirectRelative("flight/new");
             }
 
+            $planeWidth = (int)$_ENV["PLANE_WIDTH"];
+            $planeLength = (int)$_ENV["PLANE_LENGTH"];
             $result = FlightManager::addFlight(
                 $flightDetails["airline"],
                 $flightDetails["begin"],
@@ -165,17 +167,12 @@ class flight extends Controller
                 $flightDetails["arrivalDateTime"],
                 $flightDetails["economyClassPrice"],
                 $flightDetails["businessClassPrice"],
-                "SCHEDULED"
+                "SCHEDULED",
+                $planeWidth,
+                $planeLength
             );
 
             if ($result) {
-                $planeWidth = (int)$_ENV["PLANE_WIDTH"];
-                $planeLength = (int)$_ENV["PLANE_LENGTH"];
-                for ($x = 65; $x <= 64 + $planeWidth; $x++) {
-                    for ($y = 1; $y <= $planeLength; $y++) {
-                        SeatManager::addSeat(chr($x), $y, $result, $y <= $planeLength / 2 ? "ECONOMY" : "BUSINESS");
-                    }
-                }
                 create_flash_message("flight/new", "Flight added successfully.", FLASH_SUCCESS);
             } else {
                 create_flash_message("flight/new", "Something went wrong.", FLASH_ERROR);
